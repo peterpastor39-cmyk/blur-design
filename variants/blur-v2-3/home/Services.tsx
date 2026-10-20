@@ -1,15 +1,13 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { Cormorant_Garamond } from "next/font/google";
 import AsciiReveal from "./AsciiReveal";
 
-const serif = Cormorant_Garamond({ subsets: ["latin"], weight: ["400"], display: "swap" });
 
 const services = [
-  { name: "Brand Refresh", line: "Stay Relevant. Stay Valuable.", image: "billboard", title: "Billboard", about: "An outdoor identity system built to be read at speed, in any city, at any distance." },
-  { name: "Reposition", line: "Don’t Become the Best. Become the Only", image: "sonar-dashboard", title: "Sonar", about: "A trading dashboard that turns dense on-chain data into calm, confident decisions." },
-  { name: "Expansion", line: "Don’t Become the Best. Become the Only", image: "tendr", title: "Tendr", about: "Skincare packaging grounded in raw stone and warm light, quiet on the shelf and loud in the hand." },
-  { name: "Turnaround", line: "Make Your Next Move Your Turning Point", image: "knox-locker", title: "Knox Locker", about: "A mark for a smart-locker company, sketched by hand before it was ever drawn on screen." },
+  { name: "Brand identity", line: "Marks and visual systems shaped around your story.", image: "billboard", title: "Billboard", about: "An outdoor identity system made to be read at speed, at any distance." },
+  { name: "Product design", line: "Interfaces for complex products, from wireframe to final UI.", image: "sonar-dashboard", title: "Sonar", about: "A trading platform where dense on-chain data reads as calm, clear decisions." },
+  { name: "Brand systems", line: "Guidelines that help the work grow with you.", image: "tendr", title: "Tendr", about: "Skincare packaging shaped by raw stone and warm light." },
+  { name: "Websites & decks", line: "Considered pages and presentations for key moments.", image: "knox-locker", title: "Knox Locker", about: "A mark for a smart-locker company, sketched by hand before it was drawn on screen." },
 ];
 
 // Working-model list: hovering a row floats a project preview that trails the cursor.
@@ -35,10 +33,10 @@ export default function Services() {
     el.addEventListener("pointermove", move);
     return () => { el.removeEventListener("pointermove", move); cancelAnimationFrame(raf); };
   }, []);
-  return <section className="services" aria-label="Our working model">
+  return <section className="services" aria-label="How we work">
     <div className="services-intro">
-      <AsciiReveal as="h2" className={`services-title ${serif.className}`}>Our working model is fluid, adapting to both partner and project.</AsciiReveal>
-      <p className="services-body">Jorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque. Ut diam quam, semper iaculis condimentum ac, vestibulum eu nisl.</p>
+      <AsciiReveal as="h2" className={`services-title`}>A small team, close to the work.</AsciiReveal>
+      <p className="services-body">Every engagement is led and delivered by Blur’s core team. The designers who shape the initial direction remain with the project through each stage, so the thinking, the craft, and the standard stay consistent from the first conversation to the final system.</p>
     </div>
     <ul className="services-list" ref={list} onPointerLeave={() => setActive(null)}>
       {services.map((s, i) => <li key={s.name} className={`services-row${active === i ? " is-active" : ""}`} onPointerEnter={() => setActive(i)}>

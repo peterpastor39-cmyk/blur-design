@@ -66,11 +66,9 @@ export default function ScrollStory() {
   return <div className="story">
     <section className="story-track" ref={track} aria-label="About Blur">
       <div className="story-stage">
-        <AsciiReveal as="h2" className="story-slogan">We’re create partners to torch-bearing brands buildings <em>product for tomorrow</em></AsciiReveal>
+        <AsciiReveal as="h2" className="story-slogan">An independent studio turning hard questions into <em>clear brands and products.</em></AsciiReveal>
         <div className="story-copy">
-          <p className="story-label">( The step aside )</p>
-          <AsciiReveal as="h3" active={copyShown}>Strategy first. Craft always. Nothing ordinary.</AsciiReveal>
-          <p className="story-body">Sorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra.</p>
+          <AsciiReveal as="h3" active={copyShown}>We work with growing teams, helping them shape ideas into brands and products that are clear, considered, and built to last.</AsciiReveal>
         </div>
         <div className="story-media" ref={media}>
           {reel.map((image, i) => <img key={image} src={`/hero-images/${image}.webp`} alt="" aria-hidden={i !== slide} data-on={i === slide} draggable={false} />)}

@@ -68,9 +68,9 @@
 .root :global(.story-media) { position: absolute; left: 0; top: 0; overflow: hidden; background: #111; will-change: transform, width, height; }
 .root :global(.story-media img) { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; visibility: hidden; user-select: none; }
 .root :global(.story-media img[data-on="true"]) { visibility: visible; }
-.root :global(.story-copy) { position: absolute; left: 3.3333%; bottom: 8svh; width: 44%; opacity: var(--copy-in); transform: translateY(calc((1 - var(--copy-in)) * 30px)); }
+.root :global(.story-copy) { position: absolute; left: 3.3333%; bottom: 8svh; width: 38%; opacity: var(--copy-in); transform: translateY(calc((1 - var(--copy-in)) * 30px)); }
 .root :global(.story-label) { margin: 0 0 22px; font-family: var(--font-aspekta), Arial, sans-serif; font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
-.root :global(.story-copy h3) { margin: 0 0 20px; font-weight: 500; font-size: clamp(36px, 4.4vw, 84px); line-height: 1.02; letter-spacing: -.035em; }
+.root :global(.story-copy h3) { margin: 0 0 20px; font-weight: 500; font-size: clamp(26px, 2.6vw, 50px); line-height: 1.08; letter-spacing: -.035em; }
 .root :global(.story-body) { margin: 0; max-width: 420px; font-family: var(--font-aspekta), Arial, sans-serif; font-size: 15px; line-height: 1.5; opacity: .7; }
 .root :global(.story-work) { background: #0b0b0b; color: #fff; padding: 40px 3.3333% 120px; }
 .root :global(.story-work-title) { margin: 0 0 40px; font-family: var(--font-aspekta), Arial, sans-serif; font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
@@ -91,7 +91,7 @@
 @media (hover: none) { .root :global(.work-pills) { opacity: 1; transform: none; } }
 @media (max-width: 800px) {
   .root :global(.story-copy) { top: 14svh; bottom: auto; width: auto; right: 3.3333%; }
-  .root :global(.story-copy h3) { font-size: 32px; }
+  .root :global(.story-copy h3) { font-size: 24px; }
   .root :global(.story-body) { display: none; }
   .root :global(.work-grid) { grid-template-columns: 1fr; gap: 12px; }
   .root :global(.work-tile) { aspect-ratio: 4 / 5; }
@@ -103,7 +103,7 @@
 
 /* Section titles arrive as hero-style glyphs, then resolve into real type */
 .root :global(:where(.ascii-reveal)) { position: relative; }
-.root :global(.ascii-text) { display: inline; will-change: opacity, filter; }
+.root :global(.ascii-text) { display: block; will-change: opacity, filter; }
 .root :global(.ascii-canvas) { position: absolute; left: -24px; top: -24px; width: calc(100% + 48px); height: calc(100% + 48px); pointer-events: none; }
 .root :global(.noise-defs) { position: absolute; width: 0; height: 0; overflow: hidden; visibility: hidden; }
 
@@ -160,3 +160,33 @@
   .root :global(.more-card:nth-child(even)) { margin-top: 48px; }
   }
 @media (prefers-reduced-motion: reduce) { .root :global(.more-media img) { transition: none; } }
+
+/* Why Blur — name story between the work grid and more work */
+.root :global(.name-story) { background: #0b0b0b; color: #fff; display: grid; grid-template-columns: 1fr 1fr; column-gap: 6%; align-items: end; padding: 160px 3.3333% 40px; }
+.root :global(.name-story .story-label) { grid-column: 1 / -1; color: rgba(255,255,255,.55); }
+.root :global(.name-title) { margin: 0; font-size: clamp(44px, 5.4vw, 104px); font-weight: 400; line-height: .98; letter-spacing: -.02em; }
+.root :global(.name-title em) { color: rgba(255,255,255,.5); }
+.root :global(.name-body) { margin: 0; max-width: 560px; font-size: 18px; line-height: 1.55; color: rgba(255,255,255,.55); }
+.root :global(.study-social) { display: flex; gap: 18px; margin: 0; padding: 0; list-style: none; }
+.root :global(.study-social a) { display: block; width: 26px; height: 26px; color: inherit; transition: opacity 160ms; }
+.root :global(.study-social a:hover) { opacity: .6; }
+.root :global(.study-social svg) { width: 100%; height: 100%; display: block; }
+@media (max-width: 800px) {
+  .root :global(.name-story) { grid-template-columns: 1fr; row-gap: 28px; padding: 96px 22px 24px; }
+  .root :global(.name-body) { font-size: 15px; }
+}
+
+
+
+/* Aspekta everywhere below the hero: keep emphasis upright, colour only */
+.root :global(.name-title em), .root :global(.more-caption em) { font-style: normal; }
+.root :global(.name-title), .root :global(.services-title) { font-weight: 500; letter-spacing: -.035em; }
+
+/* More work sits right under Why Blur: tighten the gap between them */
+.root :global(.more-work) { padding-top: 48px; }
+@media (max-width: 800px) { .root :global(.more-work) { padding-top: 32px; } }
+
+/* More work: each card's number, caption and exit tile resolve from blur in sequence */
+.root :global(.more-card .more-count), .root :global(.more-card .more-caption), .root :global(.more-exit .more-media) { opacity: 0; filter: blur(10px); transition: opacity 900ms ease, filter 900ms ease; transition-delay: calc(var(--i, 0) * 450ms); }
+.root :global(.more-track.is-in .more-count), .root :global(.more-track.is-in .more-caption), .root :global(.more-track.is-in .more-exit .more-media) { opacity: 1; filter: none; }
+@media (prefers-reduced-motion: reduce) { .root :global(.more-card .more-count), .root :global(.more-card .more-caption), .root :global(.more-exit .more-media) { opacity: 1; filter: none; transition: none; } }
