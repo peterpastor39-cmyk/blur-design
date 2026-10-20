@@ -134,8 +134,8 @@
 .root :global(.more-card:nth-child(3) .more-media) { aspect-ratio: 3 / 4; }
 .root :global(.more-count) { display: block; margin-bottom: 14px; font-size: 12px; letter-spacing: .08em; color: rgba(255,255,255,.45); font-variant-numeric: tabular-nums; }
 .root :global(.more-media) { overflow: hidden; background: #161616; }
-.root :global(.more-media img) { display: block; width: 100%; height: 100%; object-fit: cover; filter: blur(10px) saturate(.6); transform: scale(1.06); transition: filter 700ms cubic-bezier(.2,.65,.3,1), transform 900ms cubic-bezier(.2,.65,.3,1); }
-.root :global(.more-card:hover .more-media img) { filter: blur(0) saturate(1); transform: scale(1); }
+.root :global(.more-media img) { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 900ms cubic-bezier(.2,.65,.3,1); }
+.root :global(.more-card:hover .more-media img) { transform: scale(1.03); }
 .root :global(.more-caption) { margin: 18px 0 0; font-size: 16px; }
 .root :global(.more-caption span) { font-size: 19px; color: rgba(255,255,255,.55); }
 .root :global(.more-exit .more-media) { display: flex; align-items: center; justify-content: center; gap: 14px; aspect-ratio: 4 / 3; color: #fff; text-decoration: none; font-size: clamp(28px, 2.4vw, 44px); border: 1px solid rgba(255,255,255,.18); background: #121212; transition: background 400ms ease; }

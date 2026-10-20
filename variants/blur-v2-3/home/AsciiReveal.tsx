@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type ElementType, type ReactNode } from "react";
+import { useEffect, useRef, type ElementType, type FC, type ReactNode } from "react";
 
 // Same glyph language as the hero headline: a title arrives as flickering characters,
 // then the characters drop out one by one while the real type sharpens underneath.
@@ -160,8 +160,9 @@ export default function AsciiReveal({ as: Tag = "h2", className = "", active, ch
     if (active) control.current?.play(); else control.current?.reset();
   }, [active]);
 
-  return <Tag ref={root} className={`ascii-reveal ${className}`} {...rest}>
+  const El = Tag as unknown as FC<any>;
+  return <El ref={root} className={`ascii-reveal ${className}`} {...rest}>
     <span className="ascii-text">{children}</span>
     <canvas ref={canvas} className="ascii-canvas" aria-hidden="true" />
-  </Tag>;
+  </El>;
 }

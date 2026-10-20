@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { Cormorant_Garamond } from "next/font/google";
+import AsciiReveal from "./AsciiReveal";
 
 const serif = Cormorant_Garamond({ subsets: ["latin"], weight: ["400"], display: "swap" });
 
@@ -36,7 +37,7 @@ export default function Services() {
   }, []);
   return <section className="services" aria-label="Our working model">
     <div className="services-intro">
-      <h2 className={`services-title ${serif.className}`}>Our working model is fluid, adapting to both partner and project.</h2>
+      <AsciiReveal as="h2" className={`services-title ${serif.className}`}>Our working model is fluid, adapting to both partner and project.</AsciiReveal>
       <p className="services-body">Jorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc vulputate libero et velit interdum, ac aliquet odio mattis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur tempus urna at turpis condimentum lobortis. Ut commodo efficitur neque. Ut diam quam, semper iaculis condimentum ac, vestibulum eu nisl.</p>
     </div>
     <ul className="services-list" ref={list} onPointerLeave={() => setActive(null)}>
