@@ -17,7 +17,7 @@ export default function NoiseImage({ src, alt = "" }: { src: string; alt?: strin
     const tile = image?.closest<HTMLElement>(".work-tile");
     if (!image || !noise || !map || !tile) return;
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
-    let frame = 0, start = 0;
+    let frame = 0, start = 0, lastScroll = -Infinity;
 
     function draw(now: number) {
       const t = Math.min(1, (now - start) / DURATION);
@@ -29,14 +29,19 @@ export default function NoiseImage({ src, alt = "" }: { src: string; alt?: strin
       else { image!.style.filter = ""; frame = 0; }
     }
     function enter() {
-      if (reduced.matches) return;
+      if (reduced.matches || performance.now() - lastScroll < 180) return;
       cancelAnimationFrame(frame);
       image!.style.filter = `url(#${id})`;
       start = performance.now();
       frame = requestAnimationFrame(draw);
     }
+    function scroll() {
+      lastScroll = performance.now();
+      if (frame) { cancelAnimationFrame(frame); frame = 0; image!.style.filter = ""; }
+    }
     tile.addEventListener("pointerenter", enter);
-    return () => { cancelAnimationFrame(frame); tile.removeEventListener("pointerenter", enter); };
+    window.addEventListener("scroll", scroll, { passive: true });
+    return () => { cancelAnimationFrame(frame); tile.removeEventListener("pointerenter", enter); window.removeEventListener("scroll", scroll); };
   }, [id]);
 
   return <>

@@ -6,6 +6,8 @@ const isDev = process.env.NODE_ENV === "development";
 
 const nextConfig: NextConfig = {
   pageExtensions: isDev ? ["dev.tsx", "tsx", "ts"] : ["tsx", "ts"],
+  output: isDev ? undefined : "export",
+  trailingSlash: !isDev,
 };
 
 export default nextConfig;

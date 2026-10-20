@@ -20,7 +20,8 @@ export default function CharacterHeadline({ enabled, paused }: { enabled: boolea
     const image = new Image();
     let points: Point[] = [];
     let width = 0, height = 0, fontSize = 8, frame = 0, previous = 0;
-    let disposed = false, visible = !document.hidden, pointerActive = false;
+    let disposed = false, inView = true, visible = !document.hidden, pointerActive = false;
+    let lastPaint = 0, moving = false;
     const pointer = { x: -1000, y: -1000 };
     let pulse: { x: number; y: number; time: number } | null = null;
     let atlas: HTMLCanvasElement;
@@ -29,9 +30,15 @@ export default function CharacterHeadline({ enabled, paused }: { enabled: boolea
     function draw(now: number) {
       frame = 0;
       if (disposed || !visible || !ctx) return;
+      const animate = !paused && !reduce.matches;
+      // The idle glyphs flicker on a 110ms clock; repainting them at 60fps wastes work.
+      if (animate && !pointerActive && !pulse && !moving && now - lastPaint < 1000 / 30) {
+        frame = requestAnimationFrame(draw);
+        return;
+      }
+      lastPaint = now;
       const dt = Math.min((now - (previous || now - 16.67)) / 16.67, 2);
       previous = now;
-      const animate = !paused && !reduce.matches;
       const radius = width < 600 ? 70 : 125;
       let maxDisplacement = 0;
       ctx.clearRect(0, 0, width, height);
@@ -71,6 +78,7 @@ export default function CharacterHeadline({ enabled, paused }: { enabled: boolea
       }
       ctx.globalAlpha = 1;
       surface!.dataset.displacement = maxDisplacement.toFixed(2);
+      moving = maxDisplacement > .05;
       if (pulse && now - pulse.time > 1600) pulse = null;
       if (animate) frame = requestAnimationFrame(draw);
     }
@@ -129,10 +137,17 @@ export default function CharacterHeadline({ enabled, paused }: { enabled: boolea
     }
     function preference() { leave(); wake(); }
     function visibility() {
-      visible = !document.hidden;
+      visible = inView && !document.hidden;
+      surface!.dataset.active = String(visible);
       if (!visible && frame) { cancelAnimationFrame(frame); frame = 0; }
+      if (!visible) { pointerActive = false; pulse = null; }
       previous = 0; if (visible) wake();
     }
+    const viewport = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting;
+      visibility();
+    });
+    viewport.observe(container);
     const resize = new ResizeObserver(build);
     resize.observe(container);
     container.addEventListener("pointermove", move);
@@ -144,7 +159,7 @@ export default function CharacterHeadline({ enabled, paused }: { enabled: boolea
     image.onload = build;
     image.src = "/hero-headline.svg";
     return () => {
-      disposed = true; cancelAnimationFrame(frame); resize.disconnect();
+      disposed = true; cancelAnimationFrame(frame); resize.disconnect(); viewport.disconnect();
       container.removeEventListener("pointermove", move);
       container.removeEventListener("pointerleave", leave);
       container.removeEventListener("pointerdown", press);
