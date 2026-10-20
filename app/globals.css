@@ -1,0 +1,106 @@
+:root {
+  --bg: #000;
+  --fg: #fff;
+  --gutter: clamp(20px, 4.85vw, 120px);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-aspekta), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  position: relative;
+  height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero__canvas {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.nav {
+  position: absolute;
+  top: clamp(20px, 6.5vh, 82px);
+  left: var(--gutter);
+  right: var(--gutter);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.nav__logo {
+  display: block;
+  width: clamp(88px, 8.5vw, 200px);
+}
+
+.nav__logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.nav__links {
+  display: flex;
+  gap: clamp(20px, 3.8vw, 80px);
+  list-style: none;
+  margin-top: clamp(6px, 1.1vw, 20px);
+  font-size: clamp(13px, 1vw, 20px);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.nav__links a {
+  opacity: 0.9;
+  transition: opacity 0.3s ease;
+}
+
+.nav__links a:hover {
+  opacity: 0.55;
+}
+
+.headline {
+  position: absolute;
+  left: var(--gutter);
+  right: var(--gutter);
+  bottom: clamp(24px, 5.5vw, 110px);
+  font-size: clamp(44px, 6.9vw, 150px);
+  font-weight: 500;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+}
+
+.headline__line {
+  display: block;
+  overflow: hidden;
+  /* room for descenders inside the reveal mask */
+  padding-bottom: 0.1em;
+  margin-bottom: -0.1em;
+}
+
+.headline__line > span {
+  display: block;
+}

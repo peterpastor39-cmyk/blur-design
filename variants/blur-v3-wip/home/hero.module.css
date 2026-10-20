@@ -1,0 +1,37 @@
+.root { --ink: #f5f7f9; --muted: #293746; background: #fff; color: var(--ink); font-family: var(--font-aspekta), "Aspekta", Arial, sans-serif; font-weight: 400; }
+.atmosphere { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(180deg, #050607 0%, #07090c 26%, #101923 43%, #273b4e 55%, #7897b1 65%, #dceaf1 74%, #c9dce9 84%, #c9dce9 100%); }
+.atmosphere::before { content: ""; position: absolute; inset: 0; background: url("/gradient-grain.svg") repeat; opacity: .075; }
+.atmosphere::after { content: ""; position: absolute; inset: 80% 0 0; background: linear-gradient(180deg, #fff0 0%, #ffffff99 60%, #fff 100%); }
+.root :global(.study-hero) { height: 100svh; min-height: 640px; position: relative; overflow: hidden; isolation: isolate; }
+.root :global(.study-nav) { position: absolute; z-index: 3; top: 25px; left: 3.3333%; right: 3.3333%; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 30px; }
+.root :global(.study-logo) { width: 88px; height: 46px; display: flex; align-items: center; }
+.root :global(.study-logo img) { width: 88px; height: 51px; object-fit: contain; }
+.root :global(.study-nav ul) { display: flex; list-style: none; gap: 32px; font-size: 14px; font-weight: 500; }
+.root :global(.study-nav a) { transition: opacity 160ms; }
+.root :global(.study-nav a:hover) { opacity: .65; }
+.root :global(a:focus-visible) { outline: 1px solid currentColor; outline-offset: 5px; }
+.root :global(.study-call) { justify-self: end; background: #f5f7f9; color: #111; border-radius: 30px; padding: 10px 17px; font-size: 12px; font-weight: 500; display: flex; gap: 18px; align-items: center; }
+.root :global(.character-stage) { position: absolute; inset: 0; }
+.root :global(.character-title) { position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%); width: 74.5%; margin: 0; line-height: 0; user-select: none; }
+.root :global(.character-title img) { width: 100%; height: auto; display: block; mask-image: linear-gradient(to bottom, #000 65%, #000c 80%, #0003 96%, #0000 100%); }
+.root :global(.character-stage[data-ready="true"] .character-title img) { opacity: 0; }
+.root :global(.character-canvas) { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.root :global(.study-sr-only) { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.root :global(.study-meta) { position: absolute; z-index: 2; bottom: 35px; left: 3.3333%; right: 3.3333%; display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; font-size: clamp(12px,1.0417vw,20px); line-height: 1.35; color: var(--muted); }
+.root :global(.study-clock) { display: flex; gap: 10px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.root :global(.study-clock time) { color: #111; }
+@media (min-width: 1700px) { .root :global(.study-nav ul) { font-size: 20px; gap: 42px; } .root :global(.study-call) { font-size: 16px; padding: 13px 22px; } }
+@media (max-width: 700px) {
+  .root :global(.study-hero) { min-height: 600px; }
+  .root :global(.study-nav) { left: 22px; right: 22px; top: 20px; grid-template-columns: 1fr auto; gap: 20px; }
+  .root :global(.study-logo), .root :global(.study-logo img) { width: 72px; }
+  .root :global(.study-nav nav) { grid-column: 1/-1; grid-row: 2; justify-self: center; }
+  .root :global(.study-nav ul) { gap: 27px; font-size: 12px; }
+  .root :global(.study-call) { grid-column: 2; grid-row: 1; padding: 10px 14px; font-size: 11px; }
+  .root :global(.character-title) { width: calc(100% - 36px); }
+  .root :global(.study-meta) { left: 22px; right: 22px; bottom: 28px; align-items: flex-start; font-size: 11px; }
+  .root :global(.study-meta > p:first-child) { max-width: 235px; }
+  .root :global(.study-clock) { flex-direction: column; gap: 3px; text-align: right; }
+  .root :global(.study-desktop-break) { display: none; }
+}
+

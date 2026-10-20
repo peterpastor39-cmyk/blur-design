@@ -1,0 +1,8 @@
+.preview { height: 100svh; min-height: 400px; display: flex; flex-direction: column; background: #f3f3f3; color: #151515; font-family: var(--font-aspekta), Arial, sans-serif; }
+.bar { padding: 14px 22px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid #dedede; font-size: 12px; }
+.bar nav { display: flex; gap: 6px; flex-wrap: wrap; }
+.bar a { padding: 8px 12px; border-radius: 5px; text-decoration: none; }
+.bar a[aria-current="page"] { background: #111; color: #fff; }
+.bar a:focus-visible { outline: 2px solid #111; outline-offset: 2px; }
+.bar a:hover { background: #dedede; color: #111; }
+.frame { flex: 1; width: 100%; min-height: 0; border: 0; background: white; }

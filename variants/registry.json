@@ -1,0 +1,75 @@
+{
+  "versions": [
+    {
+      "id": "blur-v1",
+      "label": "Version 1 — Orbit sphere",
+      "note": "White hero with orbit gallery; frozen baseline before trying Allia's wheel treatment.",
+      "from": null,
+      "createdAt": "2026-10-20T08:00:00Z"
+    },
+    {
+      "id": "blur-v2-wip",
+      "label": "Version 2 — Wheel gallery (draft)",
+      "note": "Try Allia-inspired wheel geometry with drag and scroll, without the lower demo controls.",
+      "from": "blur-v1",
+      "createdAt": "2026-10-20T07:37:00.822Z",
+      "draft": true
+    },
+    {
+      "id": "blur-v3-wip",
+      "label": "Version 3 — Atmospheric gradient (draft)",
+      "note": "Remove the gallery, preserve the distorted headline, and test a raised black-to-ice-blue gradient fading to white across the bottom 20 percent.",
+      "from": "blur-v2-wip",
+      "createdAt": "2026-10-20T07:42:25.358Z",
+      "draft": true
+    },
+    {
+      "id": "blur-v2",
+      "label": "Version 2 — Image wheel",
+      "note": "Larger responsive wheel images, visible immediately; no entrance animation or hover labels.",
+      "from": "blur-v2-wip",
+      "createdAt": "2026-10-20T07:45:00.808Z"
+    },
+    {
+      "id": "blur-v3",
+      "label": "Version 3 — Atmospheric gradient",
+      "note": "Gallery-free hero with preserved interactive character text and an editable near-black-to-ice-blue gradient, fading to white over the bottom 20 percent.",
+      "from": "blur-v3-wip",
+      "createdAt": "2026-10-20T07:46:22.821Z"
+    },
+    {
+      "id": "blur-v2-1",
+      "label": "Version 2.1 — Smaller images",
+      "note": "Smaller wheel images, bigger spread-out headline, uppercase larger footer",
+      "from": "blur-v2",
+      "createdAt": "2026-10-20T08:03:30.696Z"
+    },
+    {
+      "id": "blur-v2-2",
+      "label": "Version 2.2 — Scroll story",
+      "note": "Adds a slogan → cycling image that shrinks right → black Works grid, after noth.in / Porto Rocha",
+      "from": "blur-v2-1",
+      "createdAt": "2026-10-20T08:12:43.320Z"
+    },
+    {
+      "id": "blur-v2-3",
+      "label": "Version 2.3 — Index grid",
+      "note": "Selected work as a numbered dark grid (greyscale until hover) instead of the horizontal slider, to avoid copying Unikorns",
+      "from": "blur-v2-2",
+      "createdAt": "2026-10-20T08:36:00.899Z"
+    },
+    {
+      "id": "blur-v2-4",
+      "label": "blur-v2-4",
+      "note": "Selected work as an 8-tile staggered 4-column masonry (offset columns, caption bottom-left) to feel more editorial than an even grid",
+      "from": "blur-v2-3",
+      "createdAt": "2026-10-20T08:54:41.389Z"
+    }
+  ],
+  "pages": {
+    "home": {
+      "label": "Hero",
+      "group": "Blur Design"
+    }
+  }
+}
