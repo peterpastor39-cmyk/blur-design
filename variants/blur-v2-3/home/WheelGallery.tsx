@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, type RefObject } from "react";
+import { useEffect, useRef, type CSSProperties, type RefObject } from "react";
 
 const projects = [
   { image: "tendr", title: "Tendr", alt: "Skincare packaging and brand design" },
@@ -105,9 +105,9 @@ export default function WheelGallery({ hero }: { hero: RefObject<HTMLElement | n
       }
       if (dragging && event.pointerId === pointer) {
         const now = performance.now(), dt = Math.max((now-lastMove)/1000,.008);
-        const delta = (event.clientX-lastX)*.05;
+        const delta = (event.clientX-lastX)*.012;
         target += delta;
-        velocity = Math.max(-12,Math.min(12,delta/dt))*.18;
+        velocity = Math.max(-4,Math.min(4,delta/dt))*.18;
         lastX = event.clientX; lastMove = now;
       }
       wake();
@@ -124,7 +124,7 @@ export default function WheelGallery({ hero }: { hero: RefObject<HTMLElement | n
       if (event.ctrlKey || event.metaKey || excluded(event) || Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
       event.preventDefault();
       const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? gallery!.clientHeight : 1;
-      target += event.deltaX*unit*.025; velocity = 0; wake();
+      target += event.deltaX*unit*.008; velocity = 0; wake();
     }
     function leave() { targetX = 0; targetY = 0; wake(); }
     function resize() { radius = radiusFor(cards[0]?.offsetWidth || 420); leave(); }
@@ -142,6 +142,8 @@ export default function WheelGallery({ hero }: { hero: RefObject<HTMLElement | n
     }
     function preference() { targetX = 0; targetY = 0; velocity = 0; wake(); }
     function introSpin() {
+      // Cards wait faded out behind the intro, then fade in one after another as the blinds clear.
+      window.clearTimeout(unveilFallback); delete gallery!.dataset.intro;
       if (reduced.matches) return;
       spin = { from: angle, to: Math.ceil((angle + SPIN_TURNS * Math.PI * 2) / STEP) * STEP, start: performance.now() };
       open = 1;
@@ -155,6 +157,9 @@ export default function WheelGallery({ hero }: { hero: RefObject<HTMLElement | n
     gallery.addEventListener("keydown",keys); window.addEventListener("resize",resize);
     document.addEventListener("visibilitychange",visibility); reduced.addEventListener("change",preference);
     window.addEventListener("blur:intro-reveal",introSpin);
+    gallery.dataset.intro = "pending";
+    // Never leave the wheel hidden if the intro stalls or isn't on the page.
+    const unveilFallback = window.setTimeout(() => { delete gallery.dataset.intro; }, 16000);
     wake();
     return () => {
       disposed = true; cancelAnimationFrame(frame);
@@ -164,13 +169,13 @@ export default function WheelGallery({ hero }: { hero: RefObject<HTMLElement | n
       surface.removeEventListener("lostpointercapture",up); surface.removeEventListener("pointerleave",leave);
       surface.removeEventListener("wheel",scroll); gallery.removeEventListener("keydown",keys); window.removeEventListener("resize",resize);
       document.removeEventListener("visibilitychange",visibility); reduced.removeEventListener("change",preference);
-      window.removeEventListener("blur:intro-reveal",introSpin);
+      window.removeEventListener("blur:intro-reveal",introSpin); window.clearTimeout(unveilFallback);
     };
   },[hero]);
 
   return <div ref={root} className="wheel-gallery" tabIndex={0} role="group" aria-label="Project image wheel. Drag, scroll, or use the arrow keys to rotate.">
     <div className="wheel-camera"><div className="wheel-ring">
-      {projects.map((project,i)=><figure className="wheel-card" key={project.image} style={{ transform: placement(i*STEP), zIndex: Math.round(10000+Math.cos(i*STEP)*1200) }}>
+      {projects.map((project,i)=><figure className="wheel-card" key={project.image} style={{ "--i": i, transform: placement(i*STEP), zIndex: Math.round(10000+Math.cos(i*STEP)*1200) } as CSSProperties}>
         <img src={`/hero-images/${project.image}.webp`} alt={project.alt} draggable={false} decoding="async" />
       </figure>)}
     </div></div>

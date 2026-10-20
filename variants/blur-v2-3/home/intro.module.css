@@ -1,13 +1,19 @@
-/* --mark is the logo height; the B / "lur" split leaves the wordmark's own letter gap (102 of 2175 units). */
-.intro { --mark: clamp(84px, 8vw, 170px); --shot: clamp(190px, 20vw, 380px); position: fixed; top: 0; left: 0; right: 0; height: 100%; z-index: 50; overflow: hidden; background: #000; color: #fff; pointer-events: none; }
-.stage { position: absolute; top: 0; left: 0; right: 0; height: 100vh; height: 100svh; display: grid; place-items: center; }
-.mark { display: flex; align-items: center; }
-.piece { display: flex; overflow: hidden; }
-.piece img { display: block; height: var(--mark); width: auto; will-change: transform; }
-.gap { position: relative; flex: none; width: calc(var(--mark) * .047); height: var(--mark); }
-.shot { position: absolute; left: 50%; top: 50%; width: var(--shot); aspect-ratio: 1; border-radius: 8px; overflow: hidden; opacity: 0; visibility: hidden; transform: translate(-50%, -50%); will-change: transform, opacity; }
+/* --mark is the logo height. The wordmark is split into "Bl" / "u" / "r." at the glyphs' own gaps, so the three pieces sit flush. */
+.intro { --mark: clamp(120px, 24vw, 440px); position: fixed; inset: 0; z-index: 50; overflow: hidden; color: #fff; pointer-events: none; }
+.stage { position: absolute; inset: 0; display: grid; place-items: center; background: #000; }
+.intro { isolation: isolate; }
+.mark { display: flex; align-items: center; column-gap: 0; }
+.piece { position: relative; display: flex; overflow: hidden; }
+.glyph { display: block; height: var(--mark); width: auto; will-change: transform; }
+/* The image stack takes the u's seat: its width, and the band between its ascender line and baseline (606–1725 of 2175 units). */
+.u { position: relative; display: flex; }
+.slot { position: absolute; left: -6%; right: -6%; top: 22%; height: 62%; }
+.shot { position: absolute; inset: 0; overflow: hidden; opacity: 0; visibility: hidden; will-change: transform, opacity; }
 .shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .count { position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%); margin: 0; font-family: var(--font-aspekta), "Aspekta", Arial, sans-serif; font-size: 13px; font-weight: 500; letter-spacing: .04em; font-variant-numeric: tabular-nums; }
+/* The black itself, as squares anchored to the bottom so the first row to clear is always whole. */
+.blinds { position: absolute; inset: 0; z-index: -1; display: grid; align-content: end; }
+.cell { background: #000; margin: -0.5px; transform-origin: 50% 0%; will-change: transform; }
 @media (max-width: 700px) {
-  .intro { --mark: 64px; --shot: clamp(130px, 38vw, 180px); }
+  .intro { --mark: clamp(80px, 22vw, 120px); }
 }
