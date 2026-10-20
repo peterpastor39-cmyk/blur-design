@@ -32,13 +32,22 @@
 .root :global(.study-clock) { display: flex; gap: 10px; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .root :global(.study-clock time) { color: #111; }
 @media (min-width: 1700px) { .root :global(.study-nav ul) { font-size: 20px; gap: 42px; } .root :global(.study-call) { font-size: 16px; padding: 13px 22px; } }
+.root :global(.study-burger) { display: none; position: relative; z-index: 12; width: 36px; height: 36px; flex-direction: column; justify-content: center; align-items: center; gap: 6px; background: none; border: 0; padding: 0; color: inherit; cursor: pointer; }
+.root :global(.study-burger span) { display: block; width: 22px; height: 1.5px; background: currentColor; transition: transform 240ms; }
+.root :global(.study-burger.is-open span:first-child) { transform: translateY(3.75px) rotate(45deg); }
+.root :global(.study-burger.is-open span:last-child) { transform: translateY(-3.75px) rotate(-45deg); }
+.root :global(.study-mobile-menu) { position: fixed; inset: 0; z-index: 9; background: #000; color: #fff; display: flex; align-items: flex-end; padding: 0 22px 48px; opacity: 0; visibility: hidden; transition: opacity 240ms, visibility 240ms; }
+.root :global(.study-mobile-menu.is-open) { opacity: 1; visibility: visible; }
+.root :global(.study-mobile-menu ul) { list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 44px; font-weight: 500; line-height: 1.05; }
+@media (min-width: 701px) { .root :global(.study-mobile-menu) { display: none; } }
 @media (max-width: 700px) {
   .root :global(.study-hero) { min-height: 600px; }
   .root :global(.study-nav) { left: 22px; right: 22px; top: 20px; grid-template-columns: 1fr auto; gap: 20px; }
   .root :global(.study-logo), .root :global(.study-logo img) { width: 72px; }
-  .root :global(.study-nav nav) { grid-column: 1/-1; grid-row: 2; justify-self: center; }
-  .root :global(.study-nav ul) { gap: 27px; font-size: 12px; }
-  .root :global(.study-call) { grid-column: 2; grid-row: 1; padding: 10px 14px; font-size: 11px; }
+  .root :global(.study-nav) { grid-template-columns: 1fr auto auto; gap: 14px; }
+  .root :global(.study-nav nav) { display: none; }
+  .root :global(.study-call) { padding: 10px 14px; font-size: 11px; }
+  .root :global(.study-burger) { display: flex; }
   .root :global(.character-stage) { inset: 145px 0 170px; }
   .root :global(.character-title) { width: calc(100% - 36px); }
   .root :global(.study-meta) { left: 22px; right: 22px; bottom: 28px; align-items: flex-start; font-size: 13px; }
@@ -74,18 +83,20 @@
 .root :global(.work-index) { position: absolute; z-index: 1; top: 24px; left: 28px; font-size: 13px; font-weight: 500; font-variant-numeric: tabular-nums; letter-spacing: .04em; }
 .root :global(.work-pills) { position: absolute; z-index: 1; top: 20px; right: 24px; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 8px; max-width: 70%; opacity: 0; transform: translateY(-6px); transition: opacity 300ms ease, transform 300ms ease; }
 .root :global(.work-tile:hover .work-pills) { opacity: 1; transform: none; }
-.root :global(.work-pill) { border: 1px solid rgba(255,255,255,.75); border-radius: 999px; padding: 6px 14px; font-size: 12px; font-weight: 500; white-space: nowrap; }
+.root :global(.work-pill) { border-radius: 999px; padding: 6px 14px; font-size: 12px; font-weight: 500; white-space: nowrap; background: linear-gradient(180deg, rgba(255,255,255,.22), rgba(255,255,255,.08)); backdrop-filter: blur(18px) saturate(180%); -webkit-backdrop-filter: blur(18px) saturate(180%); box-shadow: inset 0 1px 0 rgba(255,255,255,.35), inset 0 -1px 0 rgba(255,255,255,.06), 0 4px 16px rgba(0,0,0,.18); }
 .root :global(.work-info) { position: absolute; z-index: 1; left: 28px; right: 28px; bottom: 24px; display: grid; grid-template-columns: 1fr auto; grid-template-areas: "name year" "about about"; align-items: end; row-gap: 8px; column-gap: 24px; }
 .root :global(.work-name) { grid-area: name; margin: 0; font-size: clamp(30px, 3vw, 56px); font-weight: 500; letter-spacing: -.04em; line-height: 1; }
-.root :global(.work-type) { grid-area: year; justify-self: end; align-self: end; background: rgba(0,0,0,.25); backdrop-filter: blur(6px); }
+.root :global(.work-type) { grid-area: year; justify-self: end; align-self: end; }
 .root :global(.work-about) { grid-area: about; margin: 0; max-width: 460px; font-size: 14px; line-height: 1.4; color: rgba(255,255,255,.72); }
 @media (hover: none) { .root :global(.work-pills) { opacity: 1; transform: none; } }
 @media (max-width: 800px) {
   .root :global(.story-copy) { top: 14svh; bottom: auto; width: auto; right: 3.3333%; }
   .root :global(.story-copy h3) { font-size: 32px; }
   .root :global(.story-body) { display: none; }
-  .root :global(.work-grid) { grid-template-columns: 1fr; }
-  .root :global(.work-info) { left: 18px; right: 18px; bottom: 18px; }
+  .root :global(.work-grid) { grid-template-columns: 1fr; gap: 12px; }
+  .root :global(.work-tile) { aspect-ratio: 4 / 5; }
+  .root :global(.work-tile::after) { inset: 35% 0 0; }
+  .root :global(.work-info) { left: 18px; right: 18px; bottom: 22px; row-gap: 12px; }
   .root :global(.work-index) { left: 18px; top: 16px; }
   .root :global(.work-pills) { right: 16px; top: 14px; }
   }

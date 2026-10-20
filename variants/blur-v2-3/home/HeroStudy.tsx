@@ -15,6 +15,13 @@ export default function HeroStudy() {
   const hero = useRef<HTMLElement>(null);
   const [time, setTime] = useState("");
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setMenuOpen(false); };
+    document.body.style.overflow = "hidden"; window.addEventListener("keydown", onKey);
+    return () => { document.body.style.overflow = ""; window.removeEventListener("keydown", onKey); };
+  }, [menuOpen]);
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
     onScroll(); window.addEventListener("scroll", onScroll, { passive: true });
@@ -30,7 +37,9 @@ export default function HeroStudy() {
     <a href={`${FIGMA}?node-id=375-253`} className="study-logo" aria-label="Blur Design — open the full design" target="_blank" rel="noreferrer"><img src="/blur-wordmark.svg" alt="Blur" /></a>
     <nav aria-label="Main navigation"><ul>{links.map(link => <li key={link.label}><a href={`${FIGMA}?node-id=${link.node}`} target="_blank" rel="noreferrer">{link.label}</a></li>)}</ul></nav>
     <a className="study-call" href={`${FIGMA}?node-id=375-276`} target="_blank" rel="noreferrer">Book a call <span aria-hidden="true">↗</span></a>
+    <button type="button" className={`study-burger${menuOpen ? " is-open" : ""}`} aria-label={menuOpen ? "Close menu" : "Open menu"} aria-expanded={menuOpen} aria-controls="study-mobile-menu" onClick={() => setMenuOpen(o => !o)}><span /><span /></button>
   </header>
+  <nav id="study-mobile-menu" className={`study-mobile-menu${menuOpen ? " is-open" : ""}`} aria-label="Mobile navigation" aria-hidden={!menuOpen}><ul>{links.map(link => <li key={link.label}><a href={`${FIGMA}?node-id=${link.node}`} target="_blank" rel="noreferrer" tabIndex={menuOpen ? 0 : -1} onClick={() => setMenuOpen(false)}>{link.label}</a></li>)}</ul></nav>
   <section className="study-hero" ref={hero} aria-label="Blur Design wheel gallery hero">
     <FlickerField />
     <CharacterHeadline enabled paused={false} />

@@ -18,6 +18,9 @@ body {
   color: var(--fg);
   font-family: var(--font-aspekta), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  /* Floating hero images extend past the viewport; stop sideways swipe/pan on mobile. */
+  overflow-x: clip;
+  overscroll-behavior-x: none;
 }
 
 a {

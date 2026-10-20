@@ -14,7 +14,7 @@ const projects = [
 
 // Settings inspected in the user's OrbitSphereGalleryMask Framer instance.
 const RADIUS = 400, CARD_SIZE = 200, AUTO_SPEED = 10 * Math.PI / 180;
-const DRAG_SENSITIVITY = .5, MOMENTUM = .9;
+const DRAG_SENSITIVITY = .25, MOMENTUM = .88;
 type Vector = [number, number, number];
 type Quaternion = [number, number, number, number];
 
@@ -147,7 +147,7 @@ export default function FloatingProjects({ paused, hero }: { paused: boolean; he
       const now = performance.now(), dt = Math.max((now-lastMove)/1000, .008);
       const x = -(event.clientY-lastY)*.01*DRAG_SENSITIVITY, y = (event.clientX-lastX)*.01*DRAG_SENSITIVITY;
       turn(x,y,0);
-      velocityX = Math.max(-6, Math.min(6, x/dt)); velocityY = Math.max(-6, Math.min(6, y/dt));
+      velocityX = Math.max(-2, Math.min(2, x/dt)); velocityY = Math.max(-2, Math.min(2, y/dt));
       lastX = event.clientX; lastY = event.clientY; lastMove = now;
     }
     function up(event: PointerEvent) {
@@ -163,7 +163,7 @@ export default function FloatingProjects({ paused, hero }: { paused: boolean; he
       const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? surface!.clientHeight : 1;
       const x = Math.max(-.45, Math.min(.45, event.deltaY*unit*.0025));
       const y = Math.max(-.45, Math.min(.45, event.deltaX*unit*.0025));
-      turn(x,y,0); velocityX = x*8; velocityY = y*8; requestDraw();
+      turn(x,y,0); velocityX = x*4; velocityY = y*4; requestDraw();
     }
     function visibility() {
       if (frame) cancelAnimationFrame(frame);
