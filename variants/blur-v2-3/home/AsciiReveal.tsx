@@ -46,7 +46,7 @@ export default function AsciiReveal({ as: Tag = "h2", className = "", active, ch
       sheet = document.createElement("canvas");
       sheet.width = tile * GLYPHS.length; sheet.height = tile;
       const g = sheet.getContext("2d")!;
-      g.fillStyle = color; g.font = '600 22px "Courier New", monospace';
+      g.fillStyle = color; g.font = `600 22px ${getComputedStyle(document.body).fontFamily}`;
       g.textAlign = "center"; g.textBaseline = "middle";
       for (let i = 0; i < GLYPHS.length; i++) g.fillText(GLYPHS[i], i * tile + tile / 2, tile / 2);
       atlases.set(color, sheet);

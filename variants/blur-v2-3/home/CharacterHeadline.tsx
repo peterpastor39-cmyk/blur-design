@@ -114,7 +114,7 @@ export default function CharacterHeadline({ enabled, paused }: { enabled: boolea
       atlas.width = tile * GLYPHS.length; atlas.height = tile;
       const glyph = atlas.getContext("2d")!;
       glyph.fillStyle = "#171717";
-      glyph.font = '600 22px "Courier New", monospace';
+      glyph.font = `600 22px ${getComputedStyle(document.body).fontFamily}`;
       glyph.textAlign = "center"; glyph.textBaseline = "middle";
       for (let i = 0; i < GLYPHS.length; i++) glyph.fillText(GLYPHS[i], i * tile + tile / 2, tile / 2);
       surface.dataset.pointCount = String(points.length);

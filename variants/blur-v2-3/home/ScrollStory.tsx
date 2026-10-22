@@ -7,7 +7,9 @@ import WorkCarousel from "./WorkCarousel";
 import AsciiReveal from "./AsciiReveal";
 
 // Hard-cut slideshow, Porto Rocha style.
-const reel = ["tendr", "billboard", "sonar-dashboard", "knox-locker", "business-cards", "sonar-mobile", "sonar-mark"];
+const reel = ["workshop", "graphic-wall", "device-glow", "portrait-laugh"];
+// Vertical focus (0 = top, 1 = bottom) keeps faces in frame while the wide crop opens up.
+const focus: Record<string, number> = { workshop: .05, "graphic-wall": .2, "device-glow": .35, "portrait-laugh": .3 };
 const CUT_MS = 850;
 
 
@@ -52,7 +54,7 @@ export default function ScrollStory() {
     let needsMeasure = true, copyVisible = false, disposed = false, lastProgress = -1;
     let sectionTop = 0, travel = 1, baseHeight = 1;
     let start = { x: 0, y: 0, w: 1, h: 1 }, end = { ...start };
-    let planes: { image: HTMLImageElement; height: number }[] = [];
+    let planes: { image: HTMLImageElement; height: number; focus: number }[] = [];
 
     function measure() {
       const w = stage.clientWidth, h = stage.clientHeight;
@@ -69,7 +71,7 @@ export default function ScrollStory() {
       // Keep the clipping surface and image planes fixed between resizes.
       frame!.style.width = `${start.w}px`;
       frame!.style.height = `${baseHeight}px`;
-      planes = images.map(image => ({ image, height: start.w * (image.naturalHeight / image.naturalWidth || 10 / 16) }));
+      planes = images.map(image => ({ image, height: start.w * (image.naturalHeight / image.naturalWidth || 10 / 16), focus: Number(image.dataset.focus ?? .5) }));
       lastProgress = -1;
       lastDark = -1;
       needsMeasure = false;
@@ -85,7 +87,7 @@ export default function ScrollStory() {
       frame!.style.clipPath = `inset(0 ${(start.w - width).toFixed(2)}px ${(baseHeight - height).toFixed(2)}px 0)`;
       for (const plane of planes) {
         const scale = Math.max(width / start.w, height / plane.height);
-        plane.image.style.transform = `translate3d(${((width - start.w * scale) / 2).toFixed(2)}px, ${((height - plane.height * scale) / 2).toFixed(2)}px, 0) scale(${scale.toFixed(5)})`;
+        plane.image.style.transform = `translate3d(${((width - start.w * scale) / 2).toFixed(2)}px, ${((height - plane.height * scale) * plane.focus).toFixed(2)}px, 0) scale(${scale.toFixed(5)})`;
       }
       section!.style.setProperty("--slogan-out", range(p, 0, .35).toFixed(4));
       const copyIn = range(p, .6, 1);
@@ -196,7 +198,7 @@ export default function ScrollStory() {
           <AsciiReveal as="h3" active={copyShown}>We work with growing teams, helping them shape ideas into brands and products that are clear, considered, and built to last.</AsciiReveal>
         </div>
         <div className="story-media" ref={media}>
-          {reel.map((image, i) => <img key={image} src={`/hero-images/${image}.webp`} alt="" aria-hidden={i !== slide} data-on={i === slide} draggable={false} />)}
+          {reel.map((image, i) => <img key={image} src={`/hero-images/${image}.webp`} alt="" aria-hidden={i !== slide} data-on={i === slide} data-focus={focus[image]} draggable={false} />)}
         </div>
       </div>
     </section>
