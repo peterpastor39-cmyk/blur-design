@@ -93,9 +93,12 @@ export default function CharacterHeadline({ enabled, paused }: { enabled: boolea
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       surface.width = Math.round(width * dpr); surface.height = Math.round(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const cellX = width < 600 ? 3.2 : 5.2;
-      const cellY = width < 600 ? 4.4 : 6.8;
-      fontSize = width < 600 ? 5.6 : 8.6;
+      // Small headlines need a dense grid to stay legible; large ones read fine sparser and quieter.
+      const scale = Math.min(1, Math.max(0, (titleBox.width - 420) / (1300 - 420)));
+      const cellX = 2.2 + scale * 4;
+      const cellY = cellX * 1.3;
+      fontSize = 3.6 + scale * 4.4;
+      const threshold = 40 + scale * 30;
       const mask = document.createElement("canvas");
       mask.width = Math.ceil(width / cellX); mask.height = Math.ceil(height / cellY);
       const sample = mask.getContext("2d", { willReadFrequently: true });
@@ -105,7 +108,7 @@ export default function CharacterHeadline({ enabled, paused }: { enabled: boolea
       const pixels = sample.getImageData(0, 0, mask.width, mask.height).data;
       points = [];
       for (let y = 0; y < mask.height; y++) for (let x = 0; x < mask.width; x++) {
-        if (pixels[(y * mask.width + x) * 4 + 3] > 28) {
+        if (pixels[(y * mask.width + x) * 4 + 3] > threshold) {
           const ox = (x + .5) * cellX, oy = (y + .5) * cellY;
           points.push({ x: ox, y: oy, ox, oy, vx: 0, vy: 0, seed: (x * 17 + y * 31) % 101 });
         }

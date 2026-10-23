@@ -1,0 +1,148 @@
+{
+  "section": "Blur — localhost homepage / Editable recreation / 21 Oct 2026",
+  "node": "9:47",
+  "page": {
+    "width": 1322.6669921875,
+    "height": 5637.22802734375,
+    "sections": [
+      "01 / Hero — project wheel",
+      "02 / About Blur — opening scroll state",
+      "03 / Selected work",
+      "04 / Why Blur",
+      "05 / More work",
+      "06 / How we work"
+    ]
+  },
+  "descendants": 162,
+  "textNodes": 54,
+  "styledText": 54,
+  "aspektaText": 53,
+  "artworkText": 1,
+  "unboundTypography": [],
+  "missingFonts": [],
+  "autoLayoutContainers": 84,
+  "frameContainers": 88,
+  "shapeArtworkFrames": [
+    "Background / editable grain specks",
+    "Blur / original vector wordmark",
+    "Instagram / original SVG",
+    "Behance / editable vector icon"
+  ],
+  "boundPaintNodes": 88,
+  "spacingBoundContainers": 84,
+  "images": [
+    {
+      "id": "9:56",
+      "name": "Wheel image / cards",
+      "width": 97,
+      "height": 74
+    },
+    {
+      "id": "9:57",
+      "name": "Wheel image / knox",
+      "width": 93,
+      "height": 75
+    },
+    {
+      "id": "9:58",
+      "name": "Wheel image / mark",
+      "width": 53,
+      "height": 119
+    },
+    {
+      "id": "9:59",
+      "name": "Wheel image / billboard",
+      "width": 121,
+      "height": 198
+    },
+    {
+      "id": "9:60",
+      "name": "Wheel image / dashboard",
+      "width": 152,
+      "height": 197
+    },
+    {
+      "id": "9:61",
+      "name": "Wheel image / tendr",
+      "width": 312,
+      "height": 213
+    },
+    {
+      "id": "9:62",
+      "name": "Wheel image / sonar-mobile",
+      "width": 38,
+      "height": 121
+    },
+    {
+      "id": "9:68",
+      "name": "Studio reel / Tendr — first slide",
+      "width": 1234.6669921875,
+      "height": 951
+    },
+    {
+      "id": "9:71",
+      "name": "Project / Sonar",
+      "width": 660.33349609375,
+      "height": 453.97900390625
+    },
+    {
+      "id": "9:76",
+      "name": "Project / Billboard",
+      "width": 660.33349609375,
+      "height": 453.97900390625
+    },
+    {
+      "id": "9:82",
+      "name": "Project / Knox Locker",
+      "width": 660.33349609375,
+      "height": 453.97900390625
+    },
+    {
+      "id": "9:87",
+      "name": "Project / Tendr",
+      "width": 660.33349609375,
+      "height": 453.97900390625
+    },
+    {
+      "id": "9:98",
+      "name": "Project media / 0",
+      "width": 348,
+      "height": 435
+    },
+    {
+      "id": "9:101",
+      "name": "Project media / 1",
+      "width": 348,
+      "height": 261
+    },
+    {
+      "id": "9:104",
+      "name": "Project media / 2",
+      "width": 348,
+      "height": 464
+    },
+    {
+      "id": "9:117",
+      "name": "Studio reel / settled crop",
+      "width": 688,
+      "height": 430
+    }
+  ],
+  "placeholders": [],
+  "collections": [
+    {
+      "name": "Blur / Foundations",
+      "count": 45
+    },
+    {
+      "name": "Blur / Typography",
+      "count": 52
+    }
+  ],
+  "pageChildren": [
+    {
+      "id": "9:47",
+      "name": "Blur — localhost homepage / Editable recreation / 21 Oct 2026"
+    }
+  ]
+}

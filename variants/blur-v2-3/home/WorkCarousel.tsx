@@ -8,6 +8,8 @@ const work = [
   { image: "billboard", name: "Billboard", type: "Identity", services: ["Brand Identity Design", "Campaign"], about: "An outdoor identity system made to be read at speed, at any distance." },
   { image: "knox-locker", name: "Knox Locker", type: "Logo", services: ["Brand Identity Design", "Logo"], about: "A mark for a smart-locker company, sketched by hand before it was drawn on screen." },
   { image: "tendr", name: "Tendr", type: "Packaging", services: ["Packaging", "Brand Identity Design"], about: "Skincare packaging shaped by raw stone and warm light." },
+  { image: "business-cards", name: "Sonar identity", type: "Print", services: ["Brand Identity Design", "Print"], about: "Stationery and print that carry Sonar's mark from screen into the physical world." },
+  { image: "sonar-mark", name: "Sonar mark", type: "Logo", services: ["Logo", "Brand Identity Design"], about: "A single glyph that has to hold up from favicon to billboard." },
 ];
 
 // Numbered index grid: full-colour tiles; hover scatters the image into static, services fade in.
@@ -15,7 +17,8 @@ export default function WorkCarousel() {
   return <section className="story-work" aria-label="Selected work">
     <ol className="work-grid">
       {work.map((project, i) => <li key={project.name} className="work-tile">
-        <NoiseImage src={`/hero-images/${project.image}.webp`} />
+        {/* Tiles in the same row resolve one after the other. */}
+        <NoiseImage src={`/hero-images/${project.image}.webp`} delay={(i % 2) * 450} />
         <span className="work-index">{String(i + 1).padStart(2, "0")}</span>
         <div className="work-pills">
           {project.services.map(service => <span key={service} className="work-pill">{service}</span>)}

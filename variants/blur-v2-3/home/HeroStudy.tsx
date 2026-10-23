@@ -9,11 +9,19 @@ import NoiseHover from "./NoiseHover";
 import Services from "./Services";
 import MoreWork from "./MoreWork";
 import NameStory from "./NameStory";
+import Reveal, { type RevealItem } from "./Reveal";
 import styles from "./hero.module.css";
+
+// Hero flicker/dither dot animation is switched off. Set to true to bring it back.
+const SHOW_FLICKER_FIELD = false;
 const FIGMA = "https://www.figma.com/design/TPJOv3OOOfSabSxcu7b00O/Blur-Landing-Page";
 // TODO: swap in the real profile URLs.
 const socials = [{ label: "Instagram", href: "#" }, { label: "Behance", href: "#" }];
 const links = [{ label: "Index", node: "375-253" }, { label: "Work", node: "375-291" }, { label: "About", node: "375-351" }];
+// Hero chrome arrives as the intro blinds clear; copy and media further down arrive on scroll.
+// Titles (AsciiReveal), work tiles and More work cards (noise-in) have their own entrances.
+const introReveal: RevealItem[] = [[".character-stage", "fade"], [".study-logo, .study-nav li, .study-call, .study-burger", "rise"], [".study-portrait", "pop"], [".study-greeting, .study-blurb, .study-social li", "rise"]];
+const scrollReveal: RevealItem[] = [[".name-body, .services-body, .services-name, .services-line", "rise"]];
 export default function HeroStudy() {
   const hero = useRef<HTMLElement>(null);
   const [scrolled, setScrolled] = useState(false);
@@ -38,7 +46,7 @@ export default function HeroStudy() {
   </header>
   <nav id="study-mobile-menu" className={`study-mobile-menu${menuOpen ? " is-open" : ""}`} aria-label="Mobile navigation" aria-hidden={!menuOpen}><ul>{links.map(link => <li key={link.label}><a href={`${FIGMA}?node-id=${link.node}`} target="_blank" rel="noreferrer" tabIndex={menuOpen ? 0 : -1} onClick={() => setMenuOpen(false)}>{link.label}</a></li>)}</ul></nav>
   <section className="study-hero" ref={hero} aria-label="Blur Design wheel gallery hero">
-    <FlickerField />
+    {SHOW_FLICKER_FIELD && <FlickerField />}
     <CharacterHeadline enabled paused={false} />
     <WheelGallery hero={hero} />
     <div className="study-meta"><div className="study-intro"><img className="study-portrait" src="/hero-images/portrait.webp" alt="Portrait of Peter Pastor" width={480} height={600} /><p className="study-greeting">Greetings,<br />I&rsquo;m Peter Pastor</p></div>
@@ -47,5 +55,5 @@ export default function HeroStudy() {
       <ul className="study-social">{socials.map(s => <li key={s.label}><a href={s.href} aria-label={s.label} target="_blank" rel="noreferrer">{s.label === "Instagram"
       ? <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5" /><circle cx="12" cy="12" r="4" /><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" /></svg>
       : <svg viewBox="0 0 24 24" aria-hidden="true"><text x="12" y="17" textAnchor="middle" fontFamily="inherit" fontWeight="800" fontSize="14" fill="currentColor">Bē</text></svg>}</a></li>)}</ul></div>
-  </section><ScrollStory /><NameStory /><MoreWork /><Services /><IntroLoader /><NoiseHover selector=".wheel-card, .story-media, .more-media" /></main>;
+  </section><ScrollStory /><NameStory /><MoreWork /><Services /><IntroLoader /><Reveal mode="intro" items={introReveal} /><Reveal mode="scroll" items={scrollReveal} /><NoiseHover selector=".wheel-card, .story-media, .more-media" /></main>;
 }

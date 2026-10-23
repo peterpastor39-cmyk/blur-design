@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={aspekta.variable}>
-      <body>{children}</body>
+      <body>{children}<script src="https://mcp.figma.com/mcp/html-to-design/capture.js" async /></body>
     </html>
   );
 }

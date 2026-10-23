@@ -7,7 +7,7 @@ import WorkCarousel from "./WorkCarousel";
 import AsciiReveal from "./AsciiReveal";
 
 // Hard-cut slideshow, Porto Rocha style.
-const reel = ["workshop", "graphic-wall", "device-glow", "portrait-laugh"];
+const reel = ["workshop", "device-glow", "graphic-wall", "portrait-laugh"];
 // Vertical focus (0 = top, 1 = bottom) keeps faces in frame while the wide crop opens up.
 const focus: Record<string, number> = { workshop: .05, "graphic-wall": .2, "device-glow": .35, "portrait-laugh": .3 };
 const CUT_MS = 850;
@@ -46,6 +46,7 @@ export default function ScrollStory() {
     if (!section || !frame) return;
     const stage = section.querySelector<HTMLElement>(".story-stage")!;
     const slogan = section.querySelector<HTMLElement>(".story-slogan")!;
+    const copy = section.querySelector<HTMLElement>(".story-copy")!;
     const images = Array.from(frame.querySelectorAll("img"));
     const reduced = matchMedia("(prefers-reduced-motion: reduce)");
     let raf = 0, scrollRaf = 0, lastDark = -1;
@@ -64,8 +65,10 @@ export default function ScrollStory() {
       sectionTop = section!.getBoundingClientRect().top + window.scrollY;
       travel = Math.max(1, section!.offsetHeight - h);
       start = { x: gutter, y: top0, w: w - gutter * 2, h: Math.max(220, h - top0 - gutter) };
+      // On phones the image settles above the copy, which sits at the bottom of the stage.
+      const endTop = h * .12;
       end = narrow
-        ? { x: gutter, y: h * .46, w: w - gutter * 2, h: h * .46 - gutter }
+        ? { x: gutter, y: endTop, w: w - gutter * 2, h: Math.max(160, copy.offsetTop - 24 - endTop) }
         : (() => { const cw = Math.min(w * .52, 1000), ch = cw * 10 / 16; return { x: w - gutter - cw, y: (h - ch) / 2, w: cw, h: ch }; })();
       baseHeight = Math.max(start.h, end.h);
       // Keep the clipping surface and image planes fixed between resizes.
@@ -167,6 +170,7 @@ export default function ScrollStory() {
     const observer = new ResizeObserver(resize);
     observer.observe(stage);
     observer.observe(slogan);
+    observer.observe(copy);
     // Also refresh the document position if the hero changes height after fonts load.
     const hero = section.parentElement?.previousElementSibling;
     if (hero) observer.observe(hero);
