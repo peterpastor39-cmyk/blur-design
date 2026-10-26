@@ -43,7 +43,17 @@ export default function IntroLoader() {
     const stage = q(`.${styles.stage}`)[0] as HTMLElement;
     const cells = q(`.${styles.cell}`) as HTMLElement[];
 
-    // The intro always opens on the hero: stop the browser restoring the last
+    // Arriving at a section link (e.g. "/#work" from a case study's Back): skip the intro and land there.
+    const target = location.hash ? document.getElementById(location.hash.slice(1)) : null;
+    if (target) {
+      gsap.set(el, { autoAlpha: 0 });
+      window.dispatchEvent(new CustomEvent("blur:intro-reveal"));
+      setDone(true);
+      window.setTimeout(() => target.scrollIntoView());
+      return;
+    }
+
+    // Otherwise the intro always opens on the hero: stop the browser restoring the last
     // scroll position on reload, and hold the page at the top while it plays.
     history.scrollRestoration = "manual";
     const top = () => { if (window.scrollY) window.scrollTo(0, 0); };

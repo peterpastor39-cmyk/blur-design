@@ -1,0 +1,111 @@
+/* Case-study page, all on the homepage's #0b0b0b dark. Same tokens otherwise: Aspekta,
+   3.3333% side gutters, 13px uppercase labels. */
+.root { --ink: #fff; --muted: rgba(255,255,255,.55); --dark: #0b0b0b; --gutter: 3.3333%; --rule: rgba(255,255,255,.18);
+  background: var(--dark); color: var(--ink); font-family: var(--font-aspekta), "Aspekta", Arial, sans-serif; font-weight: 400; }
+.root :global(a) { color: inherit; }
+.root :global(a:focus-visible), .root :global(button:focus-visible) { outline: 1px solid currentColor; outline-offset: 4px; }
+.root :global(.cs-label) { margin: 0; font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
+.root :global(.cs-sr) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Nav — copied from the homepage so the two read as one site. Logo and links invert against what's beneath;
+   the call button stays a plain white pill. */
+.root :global(.cs-logo), .root :global(.cs-nav nav) { mix-blend-mode: difference; }
+.root :global(.cs-nav) { position: fixed; z-index: 10; color: #fff; top: 25px; left: var(--gutter); right: var(--gutter); display: grid; grid-template-columns: 1fr auto auto; align-items: center; line-height: 1.27; --nav-size: max(11px, .764vw); --nav-gap: max(12px, 1.667vw); gap: var(--nav-gap); }
+.root :global(.cs-logo) { font-size: var(--nav-size); font-weight: 600; letter-spacing: .04em; white-space: nowrap; }
+.root :global(.cs-nav ul) { display: flex; list-style: none; margin: 0; padding: 0; gap: var(--nav-gap); font-size: var(--nav-size); text-transform: uppercase; transition: opacity 240ms, visibility 240ms; }
+.root :global(.cs-nav.is-scrolled ul) { opacity: 0; visibility: hidden; }
+.root :global(.cs-nav a:hover) { opacity: .65; }
+/* Clear pill: a light frost keeps the label readable when images scroll beneath it. */
+.root :global(.cs-call) { justify-self: end; }
+.root :global(.cs-call), .root :global(.cs-back) { background: rgba(255,255,255,.12); color: #fff; backdrop-filter: blur(14px); border-radius: 30px; font-size: 12px; font-weight: 500; padding: 10px 17px; white-space: nowrap; transition: background-color 200ms; }
+.root :global(.cs-call:hover), .root :global(.cs-back:hover) { opacity: 1 !important; background: rgba(255,255,255,.22); }
+@media (min-width: 1700px) { .root :global(.cs-call), .root :global(.cs-back) { font-size: 16px; padding: 13px 22px; } }
+
+/* Media: hidden until Media.tsx resolves it out of static; visible straight away for reduced motion. */
+.root :global(.cs-media) { position: relative; overflow: hidden; background: #1a1a1a; border-radius: 2px; }
+.root :global(.cs-media picture), .root :global(.cs-media img) { display: block; width: 100%; height: 100%; }
+.root :global(.cs-media img) { object-fit: cover; opacity: 0; user-select: none; }
+.root :global(.cs-noise-defs) { position: absolute; width: 0; height: 0; }
+@media (prefers-reduced-motion: reduce) { .root :global(.cs-media img) { opacity: 1; } }
+
+/* Project: a pinned panel on the left holds title, client, services; story and images scroll on the right. */
+.root :global(.cs-project) { display: grid; grid-template-columns: clamp(260px, 24vw, 420px) minmax(0, 1fr); gap: 4%; padding: 96px var(--gutter) 160px; }
+.root :global(.cs-side) { position: sticky; top: 96px; align-self: start; display: flex; flex-direction: column; align-items: flex-start; height: calc(100svh - 96px - 40px); }
+.root :global(.cs-side > *) { width: 100%; }
+.root :global(.cs-title) { margin: 16px 0 32px; font-size: clamp(48px, 4.8vw, 92px); font-weight: 500; line-height: .92; letter-spacing: -.045em; }
+.root :global(.cs-meta) { margin: 0; display: grid; border-top: 1px solid var(--rule); }
+.root :global(.cs-meta > div) { display: grid; grid-template-columns: 84px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--rule); font-size: 15px; line-height: 1.4; }
+.root :global(.cs-meta dt) { color: var(--muted); font-size: 12px; font-weight: 500; text-transform: uppercase; letter-spacing: .04em; padding-top: 2px; }
+.root :global(.cs-meta dd) { margin: 0; }
+.root :global(.cs-pills) { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+/* Back sits at the foot of the pinned panel, bottom-left of the screen. */
+.root :global(.cs-side > .cs-back) { width: auto; margin-top: auto; }
+.root :global(.cs-back) { display: inline-flex; gap: 10px; align-items: center; }
+.root :global(.cs-pills li) { border: 1px solid var(--rule); border-radius: 999px; padding: 3px 11px; font-size: 13px; }
+.root :global(.cs-content) { min-width: 0; }
+.root :global(.cs-intro) { padding: 8px 0 64px; }
+.root :global(.cs-statement) { margin: 0 0 32px; font-size: clamp(28px, 3vw, 54px); font-weight: 400; line-height: 1.08; letter-spacing: -.035em; max-width: 22ch; }
+.root :global(.cs-story) { max-width: 620px; font-size: 17px; line-height: 1.6; color: var(--muted); }
+.root :global(.cs-story p) { margin: 0 0 1em; }
+.root :global(.cs-story-more) { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 500ms cubic-bezier(.2,.65,.3,1); }
+.root :global(.cs-story-more > div) { overflow: hidden; }
+.root :global(.cs-story-more.is-open) { grid-template-rows: 1fr; }
+.root :global(.cs-story-toggle) { margin-top: 8px; display: inline-flex; gap: 14px; align-items: center; font: inherit; font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: .04em; color: var(--ink); background: none; border: 1px solid var(--rule); border-radius: 999px; padding: 9px 16px; cursor: pointer; transition: background-color 200ms, color 200ms; }
+.root :global(.cs-story-toggle:hover) { background: var(--ink); color: var(--dark); }
+
+/* Gallery: cover at its own shape, then wide / pair rows. */
+.root :global(.cs-gallery) { display: grid; gap: 12px; }
+.root :global(.cs-row) { display: grid; gap: 12px; }
+.root :global(.cs-row--pair) { grid-template-columns: 1fr 1fr; }
+.root :global(.cs-fig) { margin: 0; }
+.root :global(.cs-row--wide .cs-media) { aspect-ratio: 3 / 2 !important; }
+.root :global(.cs-row--pair .cs-media) { aspect-ratio: 3 / 4 !important; }
+
+/* Decision notes: numbered, sitting right under the image they explain. */
+.root :global(.cs-decision) { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; padding: 56px 0 72px; border-top: 1px solid var(--rule); margin-top: 20px; }
+.root :global(.cs-decision .cs-label) { color: var(--muted); }
+.root :global(.cs-decision h3) { margin: 0 0 14px; font-size: clamp(22px, 1.9vw, 34px); font-weight: 500; letter-spacing: -.03em; line-height: 1.1; }
+.root :global(.cs-decision p:not(.cs-label)) { margin: 0; max-width: 52ch; font-size: 16px; line-height: 1.6; color: var(--muted); }
+
+/* More projects: three tall cards, numbered, after abrarayman.com. */
+.root :global(.cs-more) { padding: 120px var(--gutter) 160px; border-top: 1px solid var(--rule); }
+.root :global(.cs-more-head) { display: flex; justify-content: space-between; align-items: flex-start; gap: 24px; margin-bottom: 64px; }
+.root :global(.cs-more-kicker) { margin: 0; font-size: 13px; color: var(--muted); }
+.root :global(.cs-more-head h2) { margin: 0; font-size: clamp(28px, 2.4vw, 46px); font-weight: 400; letter-spacing: -.035em; line-height: 1.05; text-align: right; }
+.root :global(.cs-more-grid) { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.root :global(.cs-more-index) { display: block; margin-bottom: 10px; font-size: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.root :global(.cs-more-card) { display: block; }
+.root :global(.cs-more-card .cs-media) { aspect-ratio: 3 / 4 !important; }
+.root :global(.cs-more-card img) { transition: transform 900ms cubic-bezier(.2,.65,.3,1); }
+.root :global(.cs-more-card:hover img) { transform: scale(1.04); }
+.root :global(.cs-more-name) { display: block; margin-top: 14px; font-size: 15px; }
+.root :global(.cs-more-name span) { color: var(--muted); }
+
+/* Ending: the blackletter wordmark, set huge. */
+.root :global(.cs-end) { padding: 28px var(--gutter) var(--gutter); }
+.root :global(.cs-end-row) { display: flex; justify-content: space-between; gap: 24px; font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 12vw; }
+.root :global(.cs-end-row a:hover) { opacity: .6; }
+.root :global(.cs-wordmark) { display: block; width: 100%; height: auto; }
+
+@media (max-width: 760px) {
+  .root { --gutter: 22px; }
+  .root :global(.cs-nav nav) { display: none; }
+  .root :global(.cs-nav) { grid-template-columns: 1fr auto; top: 20px; }
+  .root :global(.cs-call) { padding: 10px 14px; font-size: 11px; }
+  /* Panel moves above the project and stops pinning. */
+  .root :global(.cs-project) { grid-template-columns: 1fr; gap: 40px; padding: 80px var(--gutter) 96px; }
+  .root :global(.cs-side) { position: static; height: auto; }
+  .root :global(.cs-side > .cs-back) { margin-top: 28px; }
+  .root :global(.cs-title) { margin-bottom: 24px; }
+  .root :global(.cs-intro) { padding-bottom: 40px; }
+  .root :global(.cs-story) { font-size: 16px; }
+  .root :global(.cs-row--pair) { grid-template-columns: 1fr; }
+  .root :global(.cs-decision) { grid-template-columns: 1fr; gap: 14px; padding: 40px 0 48px; }
+  /* Cards become a sideways swipe on phones. */
+  .root :global(.cs-more) { padding: 80px 0 96px; }
+  .root :global(.cs-more-head) { flex-direction: column; gap: 14px; margin-bottom: 40px; padding: 0 var(--gutter); }
+  .root :global(.cs-more-head h2) { text-align: left; }
+  .root :global(.cs-more-grid) { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 78vw; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 var(--gutter); scroll-padding: 0 var(--gutter); scrollbar-width: none; }
+  .root :global(.cs-more-grid li) { scroll-snap-align: start; }
+  .root :global(.cs-end-row) { flex-wrap: wrap; font-size: 11px; }
+}

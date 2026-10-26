@@ -48,7 +48,8 @@ export default function ScrollStory() {
     const slogan = section.querySelector<HTMLElement>(".story-slogan")!;
     const copy = section.querySelector<HTMLElement>(".story-copy")!;
     const images = Array.from(frame.querySelectorAll("img"));
-    const reduced = matchMedia("(prefers-reduced-motion: reduce)");
+    // Phones get the static stacked layout too: the scrubbed resize stutters while touch-scrolling.
+    const still = matchMedia("(prefers-reduced-motion: reduce), (max-width: 800px)");
     let raf = 0, scrollRaf = 0, lastDark = -1;
     let storyTween: gsap.core.Tween | null = null;
     const playback = { progress: 0 };
@@ -111,7 +112,7 @@ export default function ScrollStory() {
     }
 
     function onScroll() {
-      if (!disposed && !reduced.matches && !scrollRaf) scrollRaf = requestAnimationFrame(() => {
+      if (!disposed && !still.matches && !scrollRaf) scrollRaf = requestAnimationFrame(() => {
         scrollRaf = 0;
         updateBackground();
       });
@@ -125,7 +126,7 @@ export default function ScrollStory() {
       render(playback.progress);
       updateBackground();
     }
-    const schedule = () => { if (!disposed && !reduced.matches && !raf) raf = requestAnimationFrame(update); };
+    const schedule = () => { if (!disposed && !still.matches && !raf) raf = requestAnimationFrame(update); };
     const resize = () => { needsMeasure = true; schedule(); };
     const syncMotion = () => {
       cancelAnimationFrame(raf); raf = 0;
@@ -134,7 +135,7 @@ export default function ScrollStory() {
       storyTween?.kill();
       storyTween = null;
       delete frame.dataset.scrubbing;
-      if (reduced.matches) {
+      if (still.matches) {
         frame.removeAttribute("style");
         images.forEach(image => image.style.removeProperty("transform"));
         setCopyShown(true);
@@ -162,7 +163,7 @@ export default function ScrollStory() {
         storyTween.progress(progress).pause();
         render(progress);
         updateBackground();
-        // The reduced-motion layout may have left copy visible without changing progress.
+        // The static layout may have left copy visible without changing progress.
         copyVisible = range(progress, .6, 1) > .3;
         setCopyShown(copyVisible);
       }
@@ -177,7 +178,7 @@ export default function ScrollStory() {
     images.forEach(image => image.addEventListener("load", resize));
     addEventListener("scroll", onScroll, { passive: true });
     addEventListener("resize", resize);
-    reduced.addEventListener("change", syncMotion);
+    still.addEventListener("change", syncMotion);
     syncMotion();
     return () => {
       disposed = true;
@@ -190,7 +191,7 @@ export default function ScrollStory() {
       images.forEach(image => image.removeEventListener("load", resize));
       removeEventListener("scroll", onScroll);
       removeEventListener("resize", resize);
-      reduced.removeEventListener("change", syncMotion);
+      still.removeEventListener("change", syncMotion);
     };
   }, []);
 

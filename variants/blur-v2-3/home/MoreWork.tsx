@@ -1,11 +1,12 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useId, useRef } from "react";
 
 
 const more = [
-  { image: "business-cards", name: "Sonar identity", discipline: "Print", year: "2025" },
-  { image: "sonar-mobile", name: "Sonar mobile", discipline: "Mobile app", year: "2026" },
-  { image: "sonar-mark", name: "Sonar mark", discipline: "Logo", year: "2025" },
+  { image: "business-cards", name: "Sonar identity", discipline: "Print", year: "2025", href: "/work/sonar" },
+  { image: "sonar-mobile", name: "Sonar mobile", discipline: "Mobile app", year: "2026", href: "/work/sonar" },
+  { image: "sonar-mark", name: "Sonar mark", discipline: "Logo", year: "2025", href: "/work/sonar" },
 ];
 
 // Scroll-in: the image resolves out of blurred static — noise and blur settle to 0 as it fades up.
@@ -62,9 +63,12 @@ export default function MoreWork() {
     const t = track.current;
     if (!t) return;
     // Vertical wheel stays page scroll; only drag / trackpad-x moves the row.
-    let down = false, sx = 0, sl = 0;
-    const start = (e: PointerEvent) => { if (e.pointerType !== "mouse") return; down = true; sx = e.clientX; sl = t.scrollLeft; t.classList.add("is-drag"); };
-    const move = (e: PointerEvent) => { if (down) t.scrollLeft = sl - (e.clientX - sx); };
+    let down = false, sx = 0, sl = 0, dragged = false;
+    const start = (e: PointerEvent) => { if (e.pointerType !== "mouse") return; down = true; dragged = false; sx = e.clientX; sl = t.scrollLeft; t.classList.add("is-drag"); };
+    const move = (e: PointerEvent) => { if (!down) return; if (Math.abs(e.clientX - sx) > 5) dragged = true; t.scrollLeft = sl - (e.clientX - sx); };
+    // A drag that ends over a card shouldn't open it.
+    const click = (e: MouseEvent) => { if (dragged) { e.preventDefault(); e.stopPropagation(); dragged = false; } };
+    t.addEventListener("click", click, true);
     const end = () => { down = false; t.classList.remove("is-drag"); };
     t.addEventListener("pointerdown", start);
     addEventListener("pointermove", move);
@@ -75,13 +79,15 @@ export default function MoreWork() {
       else if (!e.isIntersecting) t.classList.remove("is-in");
     }, { threshold: [0, .25] });
     io.observe(t);
-    return () => { io.disconnect(); t.removeEventListener("pointerdown", start); removeEventListener("pointermove", move); removeEventListener("pointerup", end); };
+    return () => { io.disconnect(); t.removeEventListener("click", click, true); t.removeEventListener("pointerdown", start); removeEventListener("pointermove", move); removeEventListener("pointerup", end); };
   }, []);
   return <section className="more-work" aria-label="More work">
     <ol className="more-track" ref={track}>
       {more.map((p, i) => <li key={p.name} className="more-card" style={{ "--i": i } as React.CSSProperties}>
         <span className="more-count">{String(i + 1).padStart(2, "0")} / 04</span>
-        <div className="more-media"><NoiseIn src={`/hero-images/${p.image}.webp`} delay={i * STAGGER} /></div>
+        <div className="more-media"><NoiseIn src={`/hero-images/${p.image}.webp`} delay={i * STAGGER} />
+          {/* Inside the media box so NoiseHover still sees the pointer. */}
+          <Link href={p.href} className="more-link" aria-label={`${p.name} — case study`} draggable={false} /></div>
         <p className="more-caption">{p.name} <span>— <em>{p.discipline}, {p.year}</em></span></p>
       </li>)}
       <li className="more-card more-exit" style={{ "--i": more.length } as React.CSSProperties}>
