@@ -2,9 +2,10 @@ import type { Figure, Project } from "@/content/work";
 import Media from "./Media";
 
 const pad = (n: number) => String(n).padStart(2, "0");
-const WIDE = "(max-width: 760px) 100vw, 70vw", HALF = "(max-width: 760px) 100vw, 35vw";
+export const WIDE = "(max-width: 760px) 100vw, 70vw";
+const HALF = "(max-width: 760px) 50vw, 35vw";
 
-// The project's images: cover first, then the wide / pair rhythm.
+// The project's images in a wide / pair rhythm (the cover is placed by CaseStudy).
 // Decision notes sit between rows, right after the figure they explain.
 export default function Gallery({ project }: { project: Project }) {
   let n = 0, d = 0;
@@ -18,9 +19,6 @@ export default function Gallery({ project }: { project: Project }) {
   </aside>;
 
   return <section className="cs-gallery" aria-label={`${project.name} images`}>
-    <figure className="cs-fig cs-cover">
-      <Media slug={project.slug} name={project.cover.name} alt={project.cover.alt} sizes={WIDE} eager />
-    </figure>
     {project.rows.map(r => r.kind === "wide"
       ? [<div key={r.fig.name} className="cs-row cs-row--wide">{fig(r.fig, WIDE)}</div>, note(r.fig)]
       : [<div key={r.figs[0].name} className="cs-row cs-row--pair">{r.figs.map(f => fig(f, HALF))}</div>, ...r.figs.map(note)])}

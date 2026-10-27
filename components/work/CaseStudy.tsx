@@ -1,13 +1,14 @@
 import Link from "next/link";
 import type { MoreCard, Project } from "@/content/work";
 import { BackButton, WorkNav } from "./Chrome";
-import Gallery from "./Gallery";
+import Gallery, { WIDE } from "./Gallery";
 import Media from "./Media";
 import Story from "./Story";
 import styles from "./work.module.css";
 
 // Case-study page, on black. The project itself leads: a pinned panel on the left holds the title, client,
 // industry, services and a back button while the statement, story and images scroll on the right. Then more projects → wordmark.
+// Phones follow koto.com: no nav, just a fixed back arrow, with the cover full-bleed above the title.
 export default function CaseStudy({ project: p, more }: { project: Project; more: MoreCard[] }) {
   return <main className={styles.root}>
     <noscript><style>{".cs-media img{opacity:1}"}</style></noscript>
@@ -28,6 +29,9 @@ export default function CaseStudy({ project: p, more }: { project: Project; more
           <h2 className="cs-statement">{p.statement}</h2>
           <Story paragraphs={p.story} />
         </div>
+        <figure className="cs-fig cs-cover">
+          <Media slug={p.slug} name={p.cover.name} alt={p.cover.alt} sizes={WIDE} eager />
+        </figure>
         <Gallery project={p} />
       </div>
     </div>

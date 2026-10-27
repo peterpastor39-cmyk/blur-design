@@ -54,6 +54,7 @@
 .root :global(.cs-story-toggle:hover) { background: var(--ink); color: var(--dark); }
 
 /* Gallery: cover at its own shape, then wide / pair rows. */
+.root :global(.cs-cover) { margin-bottom: 12px; }
 .root :global(.cs-gallery) { display: grid; gap: 12px; }
 .root :global(.cs-row) { display: grid; gap: 12px; }
 .root :global(.cs-row--pair) { grid-template-columns: 1fr 1fr; }
@@ -87,25 +88,35 @@
 .root :global(.cs-end-row a:hover) { opacity: .6; }
 .root :global(.cs-wordmark) { display: block; width: 100%; height: auto; }
 
+/* Phones, after koto.com: the nav goes, a square back arrow stays pinned top-left, the cover runs full-bleed
+   at the top and images sit 8px off the screen edge in a tighter rhythm. */
 @media (max-width: 760px) {
-  .root { --gutter: 22px; }
-  .root :global(.cs-nav nav) { display: none; }
-  .root :global(.cs-nav) { grid-template-columns: 1fr auto; top: 20px; }
-  .root :global(.cs-call) { padding: 10px 14px; font-size: 11px; }
-  /* Panel moves above the project and stops pinning. */
-  .root :global(.cs-project) { grid-template-columns: 1fr; gap: 40px; padding: 80px var(--gutter) 96px; }
-  .root :global(.cs-side) { position: static; height: auto; }
-  .root :global(.cs-side > .cs-back) { margin-top: 28px; }
-  .root :global(.cs-title) { margin-bottom: 24px; }
-  .root :global(.cs-intro) { padding-bottom: 40px; }
-  .root :global(.cs-story) { font-size: 16px; }
-  .root :global(.cs-row--pair) { grid-template-columns: 1fr; }
-  .root :global(.cs-decision) { grid-template-columns: 1fr; gap: 14px; padding: 40px 0 48px; }
+  .root { --gutter: 16px; --edge: 8px; }
+  .root :global(.cs-nav) { display: none; }
+  .root :global(.cs-side > .cs-back) { position: fixed; z-index: 10; top: 16px; left: 16px; width: 44px; height: 44px; margin: 0; padding: 0; justify-content: center; border-radius: 4px; background: rgba(11,11,11,.55); font-size: 16px; }
+  .root :global(.cs-back-label) { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  /* Cover first, then the details panel, story and gallery. */
+  .root :global(.cs-project) { display: flex; flex-direction: column; padding: 0 var(--gutter) 96px; }
+  .root :global(.cs-content) { display: contents; }
+  .root :global(.cs-cover) { order: -1; margin: 0 calc(-1 * var(--gutter)); }
+  .root :global(.cs-cover .cs-media) { aspect-ratio: auto !important; height: 60svh; border-radius: 0; }
+  .root :global(.cs-side) { position: static; height: auto; padding-top: 24px; }
+  .root :global(.cs-title) { margin: 0 0 20px; font-size: 32px; line-height: 1.05; letter-spacing: -.03em; }
+  .root :global(.cs-meta > div) { grid-template-columns: 76px 1fr; padding: 10px 0; font-size: 14px; }
+  .root :global(.cs-meta dt) { font-size: 11px; }
+  .root :global(.cs-pills li) { font-size: 12px; padding: 2px 9px; }
+  .root :global(.cs-intro) { padding: 32px 0 40px; }
+  .root :global(.cs-statement) { margin-bottom: 20px; font-size: 23px; line-height: 1.2; letter-spacing: -.02em; }
+  .root :global(.cs-story) { font-size: 15px; line-height: 1.55; }
+  .root :global(.cs-gallery) { gap: 8px; margin: 0 calc(var(--edge) - var(--gutter)); }
+  .root :global(.cs-row) { gap: 8px; }
+  .root :global(.cs-media) { border-radius: 6px; }
+  .root :global(.cs-decision) { grid-template-columns: 1fr; gap: 14px; padding: 40px calc(var(--gutter) - var(--edge)) 48px; margin-top: 16px; }
   /* Cards become a sideways swipe on phones. */
   .root :global(.cs-more) { padding: 80px 0 96px; }
   .root :global(.cs-more-head) { flex-direction: column; gap: 14px; margin-bottom: 40px; padding: 0 var(--gutter); }
   .root :global(.cs-more-head h2) { text-align: left; }
-  .root :global(.cs-more-grid) { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 78vw; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 var(--gutter); scroll-padding: 0 var(--gutter); scrollbar-width: none; }
+  .root :global(.cs-more-grid) { grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 78vw; gap: 8px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 0 var(--gutter); scroll-padding: 0 var(--gutter); scrollbar-width: none; }
   .root :global(.cs-more-grid li) { scroll-snap-align: start; }
   .root :global(.cs-end-row) { flex-wrap: wrap; font-size: 11px; }
 }

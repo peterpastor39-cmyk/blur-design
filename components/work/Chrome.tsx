@@ -27,5 +27,5 @@ export function BackButton() {
   return <Link href="/#work" className="cs-back" onClick={e => {
     const fromHere = document.referrer && new URL(document.referrer).origin === location.origin;
     if (fromHere && history.length > 1) { e.preventDefault(); router.back(); }
-  }}><span aria-hidden="true">←</span> Back</Link>;
+  }}><span aria-hidden="true">←</span> <span className="cs-back-label">Back</span></Link>;
 }
