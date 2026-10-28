@@ -29,9 +29,9 @@ export default function CaseStudy({ project: p, more }: { project: Project; more
           <h2 className="cs-statement">{p.statement}</h2>
           <Story paragraphs={p.story} />
         </div>
-        <figure className="cs-fig cs-cover">
+        {p.cover && <figure className="cs-fig cs-cover">
           <Media slug={p.slug} name={p.cover.name} alt={p.cover.alt} sizes={WIDE} eager />
-        </figure>
+        </figure>}
         <Gallery project={p} />
       </div>
     </div>

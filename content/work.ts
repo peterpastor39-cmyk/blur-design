@@ -4,8 +4,14 @@ import sizes from "./work-images.json";
 // TODO: every decision below is placeholder copy — replace before shipping.
 
 export type Decision = { title: string; body: string };
-export type Figure = { name: string; alt: string; caption: string; decision?: Decision };
-export type Row = { kind: "wide"; fig: Figure } | { kind: "pair"; figs: [Figure, Figure] };
+export type Figure = {
+  name: string; alt: string; caption: string; decision?: Decision;
+  /** Pixel size of a looping /work/<slug>/<name>.mp4 (with a <name>.webp poster) shown instead of an image. */
+  video?: [number, number];
+  /** Keep the image's own aspect ratio instead of the row's fixed crop. */
+  native?: boolean;
+};
+export type Row = { kind: "wide"; fig: Figure } | { kind: "pair"; figs: [Figure, Figure]; /** Shape of both images instead of the 3 / 4 crop, e.g. "4 / 5". */ ratio?: string };
 export type Project = {
   slug: string;
   name: string;
@@ -16,7 +22,8 @@ export type Project = {
   statement: string;
   /** The first paragraph is always shown; the rest sit behind "Read the story". */
   story: string[];
-  cover: { name: string; alt: string };
+  /** Lead image above the gallery; on phones it sits full-bleed above the title. */
+  cover?: { name: string; alt: string };
   /** Image used for this project's card in "More projects" (shown tall, 3:4). */
   card: string;
   rows: Row[];
@@ -35,22 +42,21 @@ export const projects: Project[] = [
       "We started from the name: a sonar doesn’t show you everything, it shows you what’s moving. The identity borrows that idea, with a mark built from pulses and a palette that stays near-black so a single green can mean “act”.",
       "The product follows the same rule. One accent, one primary action per screen, and numbers set large enough to read at a glance on a phone between meetings.",
     ],
-    cover: { name: "cover", alt: "Sonar dashboard on desktop and mobile" },
     card: "mobile",
     rows: [
-      { kind: "wide", fig: { name: "volume", alt: "Volume chart from the Sonar dashboard", caption: "Volume — one accent colour across the whole product",
+      { kind: "wide", fig: { name: "display", alt: "Sonar dashboard on a studio display", caption: "Dashboard — one accent colour across the whole product",
         decision: { title: "One colour means “act”", body: "Everything sits in greys so the green is reserved for actions and gains. When it appears, it is always the thing to look at." } } },
-      { kind: "pair", figs: [
-        { name: "mark", alt: "Sonar mark embossed on a dark surface", caption: "The mark, embossed" },
+      { kind: "pair", ratio: "4 / 5", figs: [
+        { name: "swatches", alt: "Sonar colour palette: Sonar Green, Sonar Black and three neutrals with HEX, RGB and CMYK values", caption: "Colour — Sonar Green, Sonar Black and three neutrals" },
         { name: "mobile", alt: "Sonar mobile app showing active strategies", caption: "Mobile — active strategies" },
       ] },
-      { kind: "wide", fig: { name: "cards", alt: "Sonar business cards on a dark ledge", caption: "Print — business cards",
+      { kind: "wide", fig: { name: "cards", native: true, alt: "Sonar strategy creation flow across screens", caption: "Product — strategy flow",
         decision: { title: "The pulse carries into print", body: "The concentric pattern on the card backs is the mark’s pulse, repeated. It lets small pieces of print feel like Sonar without the logo shouting." } } },
       { kind: "pair", figs: [
-        { name: "cards-detail", alt: "Close-up of the striped card backs", caption: "Card backs, detail" },
-        { name: "mobile-dashboard", alt: "Sonar mobile dashboard overview", caption: "Mobile — overview" },
+        { name: "typography", alt: "Type specimen cycling through Inter Tight and Inter Tight Display in regular, medium and semibold", caption: "Typography — Inter Tight and Inter Tight Display", video: [1050, 1350] },
+        { name: "landing", alt: "Sonar landing page, “Automated DeFi Strategies”, on a laptop", caption: "Web — landing page" },
       ] },
-      { kind: "wide", fig: { name: "strategies", alt: "Active strategies and token table in the Sonar dashboard", caption: "Strategies and tokens",
+      { kind: "wide", fig: { name: "strategies", alt: "Sonar dashboard with active strategies and token table on a studio display", caption: "Strategies and tokens",
         decision: { title: "Big numbers, quiet tables", body: "Totals are set large and everything beneath them is set small and even. Traders scan the headline first and only drop into the table when something has moved." } } },
     ],
   },

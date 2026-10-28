@@ -2,6 +2,7 @@
 //   node scripts/work-images.mjs "<source folder>"
 // Each figure gets AVIF at two widths (served via srcset) and one WebP fallback.
 // Crops are fractions of the source: [left, top, width, height].
+// `sharp: true` is for screens with small UI text: lighter compression and full-resolution colour.
 import sharp from "sharp";
 import { mkdir, writeFile } from "node:fs/promises";
 import path from "node:path";
@@ -11,14 +12,15 @@ const WIDTHS = [1000, 2000], FALLBACK = 1600, AVIF_Q = 50, WEBP_Q = 72;
 
 const figures = {
   sonar: [
-    { name: "cover", file: "Frame 2085663282.png" },
-    { name: "volume", file: "Frame 2085663282.png", crop: [.53, .1, .3, .4] },
+    { name: "display", file: "Studio Display Screen Mockup_18.jpg" },
     { name: "mark", file: "1.jpg" },
-    { name: "mobile", file: "phone mockup 3.jpg" },
-    { name: "cards", file: "business card mockup.jpg" },
+    { name: "mobile", file: "Sonar overview - phone.jpg" },
+    { name: "cards", file: "Strategy Flow.png", sharp: true },
+    { name: "swatches", file: "Sonar swatches.png", crop: [0, 0, .897, 1], sharp: true },
     { name: "cards-detail", file: "business card mockup.jpg", crop: [.22, .26, .26, .52] },
     { name: "mobile-dashboard", file: "Frame 2085663282.png", crop: [.765, .38, .233, .62] },
-    { name: "strategies", file: "Frame 2085663282.png", crop: [.26, .4, .4, .53] },
+    { name: "landing", file: "landing page mockup.jpg", crop: [.24, 0, .556, 1] },
+    { name: "strategies", file: "Sonar dashboard - studio display.jpg" },
   ],
   tendr: [
     { name: "cover", file: "tendr-waffle-1920x1080.png" },
@@ -47,9 +49,9 @@ for (const [slug, list] of Object.entries(figures)) {
     const buffer = await base.toBuffer();
     const { width: w = 0, height: h = 0 } = await sharp(buffer).metadata();
     for (const target of WIDTHS) {
-      await sharp(buffer).resize({ width: Math.min(target, w) }).avif({ quality: AVIF_Q }).toFile(path.join(out, `${fig.name}-${target}.avif`));
+      await sharp(buffer).resize({ width: Math.min(target, w) }).avif(fig.sharp ? { quality: 72, chromaSubsampling: "4:4:4" } : { quality: AVIF_Q }).toFile(path.join(out, `${fig.name}-${target}.avif`));
     }
-    await sharp(buffer).resize({ width: Math.min(FALLBACK, w) }).webp({ quality: WEBP_Q }).toFile(path.join(out, `${fig.name}.webp`));
+    await sharp(buffer).resize({ width: Math.min(FALLBACK, w) }).webp(fig.sharp ? { quality: 90, smartSubsample: true } : { quality: WEBP_Q }).toFile(path.join(out, `${fig.name}.webp`));
     manifest[slug][fig.name] = [w, h];
     console.log(`${slug}/${fig.name}  ${w}x${h}`);
   }
