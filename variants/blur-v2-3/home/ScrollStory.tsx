@@ -203,7 +203,7 @@ export default function ScrollStory() {
           <AsciiReveal as="h3" active={copyShown}>We work with growing teams, helping them shape ideas into brands and products that are clear, considered, and built to last.</AsciiReveal>
         </div>
         <div className="story-media" ref={media}>
-          {reel.map((image, i) => <img key={image} src={`/hero-images/${image}.webp`} alt="" aria-hidden={i !== slide} data-on={i === slide} data-focus={focus[image]} draggable={false} />)}
+          {reel.map((image, i) => <img key={image} src={`/hero-images/${image}.webp`} alt="" aria-hidden={i !== slide} data-on={i === slide} data-focus={focus[image]} loading="lazy" decoding="async" draggable={false} />)}
         </div>
       </div>
     </section>

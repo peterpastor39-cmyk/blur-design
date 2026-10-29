@@ -52,7 +52,7 @@ function NoiseIn({ src, delay }: { src: string; delay: number }) {
       <feTurbulence ref={noise} type="fractalNoise" baseFrequency=".9" numOctaves="2" result="n" />
       <feDisplacementMap ref={map} in="SourceGraphic" in2="n" scale={PEAK} xChannelSelector="R" yChannelSelector="G" />
     </filter></svg>
-    <img ref={img} src={src} alt="" draggable={false} />
+    <img ref={img} src={src} alt="" loading="lazy" decoding="async" draggable={false} />
   </>;
 }
 

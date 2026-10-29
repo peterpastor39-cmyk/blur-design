@@ -44,7 +44,7 @@ export default function Services() {
       </li>)}
       <li className="services-card" ref={card} data-on={active !== null ? "true" : undefined} aria-hidden="true">
         {services.map((s, i) => <div key={s.name} className="services-slide" data-on={active === i}>
-          <img src={`/hero-images/${s.image}.webp`} alt="" />
+          <img src={`/hero-images/${s.image}.webp`} alt="" loading="lazy" decoding="async" />
           <div className="services-card-text"><strong>{s.title}</strong><p>{s.about}</p></div>
         </div>)}
       </li>

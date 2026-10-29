@@ -7,13 +7,13 @@ import styles from "./intro.module.css";
 
 gsap.registerPlugin(useGSAP);
 
-// Optimised copies of the files in /hero images.
-const images = ["sonar-mark", "billboard", "knox-locker", "business-cards", "sonar-mobile", "tendr", "sonar-dashboard"];
+// Small copies (hero-images/thumb) shared with the wheel, so the intro costs no extra download.
+const images = ["sonar-mark", "billboard", "tendr", "sonar-dashboard"];
 
-// Rhythm taken from noth.in's loader: images swap on a sine curve — 500ms apart,
-// quickening to 100ms half-way, easing back to 500ms by the end of the loop.
-const LOOP = 4000;
-const swapDelay = (elapsed: number) => 100 + 400 * (1 - Math.sin(Math.min(elapsed / LOOP, 1) * Math.PI));
+// Rhythm taken from noth.in's loader: images swap on a sine curve — 250ms apart,
+// quickening to 80ms half-way, easing back to 250ms by the end of the loop.
+const LOOP = 800;
+const swapDelay = (elapsed: number) => 80 + 170 * (1 - Math.sin(Math.min(elapsed / LOOP, 1) * Math.PI));
 const EASE = "power4.inOut";
 
 function decoded(img: HTMLImageElement) {
@@ -81,7 +81,7 @@ export default function IntroLoader() {
     const { cols, rows } = grid;
     const order = (i: number) => {
       const r = Math.floor(i / cols), c = i % cols;
-      return (rows - 1 - r) * 0.035 + ((r + c) % 2) * 0.06 + Math.random() * 0.02;
+      return (rows - 1 - r) * 0.025 + ((r + c) % 2) * 0.05 + Math.random() * 0.02;
     };
 
     // 3. Close: the u returns, then the black breaks into a checkerboard of
@@ -89,11 +89,11 @@ export default function IntroLoader() {
     const close = () => {
       if (cancelled) return;
       gsap.timeline({ onComplete: finish })
-        .set(shots, { autoAlpha: 0 }, 0.15)
-        .to(mark, { columnGap: 0, duration: 0.45, ease: "power3.inOut" }, 0)
-        .set(u, { autoAlpha: 1 }, 0.15)
-        .to(count, { autoAlpha: 0, duration: 0.3 }, 0)
-        .add("blinds", 0.5)
+        .set(shots, { autoAlpha: 0 }, 0.1)
+        .to(mark, { columnGap: 0, duration: 0.3, ease: "power3.inOut" }, 0)
+        .set(u, { autoAlpha: 1 }, 0.1)
+        .to(count, { autoAlpha: 0, duration: 0.2 }, 0)
+        .add("blinds", 0.3)
         .set(stage, { backgroundColor: "transparent" }, "blinds")
         .call(release, undefined, "blinds")
         .call(reveal, undefined, "blinds")
@@ -124,19 +124,19 @@ export default function IntroLoader() {
 
     // 1. Open: "Blur." rises into place, then the u gives its seat to the image stack.
     const open = gsap.timeline({ paused: true })
-      .to(pieces, { yPercent: 0, duration: 1, ease: EASE, stagger: 0.06 })
-      .set(u, { autoAlpha: 0 }, "+=0.35")
-      .to(mark, { columnGap: () => mark.offsetHeight * 0.1, duration: 0.6, ease: EASE }, "<")
-      .fromTo(shots[0], { autoAlpha: 1, scale: 0 }, { scale: 1, duration: 0.6, ease: "back.out(1.2)" }, "<")
+      .to(pieces, { yPercent: 0, duration: 0.5, ease: EASE, stagger: 0.04 })
+      .set(u, { autoAlpha: 0 }, "+=0.1")
+      .to(mark, { columnGap: () => mark.offsetHeight * 0.1, duration: 0.4, ease: EASE }, "<")
+      .fromTo(shots[0], { autoAlpha: 1, scale: 0 }, { scale: 1, duration: 0.4, ease: "back.out(1.2)" }, "<")
       .add(() => { countUp(); swap(performance.now()); });
 
     // Wait for the images to be ready (capped so a slow network never blocks the page).
     let started = false;
     const start = () => { if (!started && !cancelled) { started = true; open.play(); } };
     Promise.all(Array.from(el.querySelectorAll("img"), decoded)).then(start);
-    const cap = window.setTimeout(start, 2500);
+    const cap = window.setTimeout(start, 600);
     // Animation frames pause in background tabs; never leave the page locked behind a stalled intro.
-    const failsafe = window.setTimeout(finish, 2500 + open.duration() * 1000 + LOOP + 8000);
+    const failsafe = window.setTimeout(finish, 600 + open.duration() * 1000 + LOOP + 8000);
 
     return () => { cancelled = true; window.clearTimeout(cap); window.clearTimeout(failsafe); window.clearTimeout(timer); gsap.killTweensOf(counter); release(); };
   }, { scope: root, dependencies: [grid] });
@@ -151,7 +151,7 @@ export default function IntroLoader() {
             <span className={styles.piece}><img className={styles.glyph} src="/blur-mark-u.svg" alt="" /></span>
             <span className={styles.slot}>
               {images.map(name => (
-                <span className={styles.shot} key={name}><img src={`/hero-images/${name}.webp`} alt="" decoding="async" /></span>
+                <span className={styles.shot} key={name}><img src={`/hero-images/thumb/${name}.webp`} alt="" decoding="async" /></span>
               ))}
             </span>
           </span>

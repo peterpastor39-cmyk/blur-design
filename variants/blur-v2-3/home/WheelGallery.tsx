@@ -176,7 +176,7 @@ export default function WheelGallery({ hero }: { hero: RefObject<HTMLElement | n
   return <div ref={root} className="wheel-gallery" tabIndex={0} role="group" aria-label="Project image wheel. Drag, scroll, or use the arrow keys to rotate.">
     <div className="wheel-camera"><div className="wheel-ring">
       {projects.map((project,i)=><figure className="wheel-card" key={project.image} style={{ "--i": i, transform: placement(i*STEP), zIndex: Math.round(10000+Math.cos(i*STEP)*1200) } as CSSProperties}>
-        <img src={`/hero-images/${project.image}.webp`} alt={project.alt} draggable={false} decoding="async" />
+        <img src={`/hero-images/thumb/${project.image}.webp`} alt={project.alt} draggable={false} decoding="async" />
       </figure>)}
     </div></div>
   </div>;
