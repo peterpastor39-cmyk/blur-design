@@ -1,4 +1,4 @@
-import type { Figure, Project } from "@/content/work";
+import { imageSize, type Figure, type Project } from "@/content/work";
 import Media from "./Media";
 import Slides from "./Slides";
 
@@ -27,9 +27,16 @@ export default function Gallery({ project }: { project: Project }) {
         </figure></div>, ...r.figs.map(note)]
       : r.kind === "wide"
       ? [<div key={r.fig.name} className="cs-row cs-row--wide">{fig(r.fig, WIDE)}</div>,
-        ...Array.from({ length: r.fig.placeholders ?? 0 }, (_, i) =>
-          <div key={`${r.fig.name}-ph${i}`} className="cs-row cs-row--wide" aria-hidden="true"><div className="cs-media" /></div>),
-        note(r.fig)]
+        note(r.fig),
+        r.fig.bento && <div key={`${r.fig.name}-bento`} className="cs-bento">
+          {[0, 2].map(k => {
+            const cells = r.fig.bento!.slice(k, k + 2);
+            const fit = cells.every(Boolean) && cells.map(f => { const [w, h] = f!.video ?? imageSize(project.slug, f!.name); return `${w / h}fr`; }).join(" ");
+            return <div key={k} className={fit ? "cs-row cs-row--bento cs-row--fit" : "cs-row cs-row--bento"} style={fit ? { gridTemplateColumns: fit } : undefined}>
+              {cells.map((f, i) => f ? fig(f, HALF) : <div key={i} className="cs-media" aria-hidden="true" />)}
+            </div>;
+          })}
+        </div>]
       : [<div key={r.figs[0].name} className="cs-row cs-row--pair"
         style={r.ratio ? { "--pair-ratio": r.ratio } as React.CSSProperties : undefined}>{r.figs.map(f => fig(f, HALF))}</div>, ...r.figs.map(note)])}
   </section>;

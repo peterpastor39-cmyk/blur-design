@@ -66,6 +66,13 @@
 .root :global(.cs-row--wide .cs-media) { aspect-ratio: 3 / 2 !important; }
 .root :global(.cs-row--pair .cs-media) { aspect-ratio: var(--pair-ratio, 3 / 4) !important; }
 .root :global(.cs-row .cs-fig--native .cs-media) { aspect-ratio: auto !important; }
+/* Bento: two rows of a narrow and a wide box, the split flipped on the second row. */
+.root :global(.cs-bento) { display: grid; gap: inherit; }
+.root :global(.cs-row--bento) { grid-template-columns: 4fr 7fr; aspect-ratio: 12 / 5; }
+.root :global(.cs-row--bento + .cs-row--bento) { grid-template-columns: 10fr 7fr; }
+.root :global(.cs-row--bento:not(.cs-row--fit) .cs-fig), .root :global(.cs-row--bento:not(.cs-row--fit) .cs-media) { height: 100%; aspect-ratio: auto !important; }
+/* Both cells filled: columns sized to the images' own shapes so nothing is cropped. */
+.root :global(.cs-row--bento.cs-row--fit) { aspect-ratio: auto; }
 
 /* Decision notes: numbered, sitting right under the image they explain. */
 .root :global(.cs-decision) { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; padding: 56px 0 72px; border-top: 1px solid var(--divider); margin-top: 20px; }

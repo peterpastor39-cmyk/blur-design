@@ -10,8 +10,8 @@ export type Figure = {
   video?: [number, number];
   /** Keep the image's own aspect ratio instead of the row's fixed crop. */
   native?: boolean;
-  /** Empty wide boxes shown under this image (before its decision) until real images exist. */
-  placeholders?: number;
+  /** A 2×2 bento grid shown under this image (after its decision); null cells stay empty until real images exist. */
+  bento?: (Figure | null)[];
 };
 export type Row = { kind: "wide"; fig: Figure } | { kind: "slides"; figs: Figure[]; caption: string; ratio?: string } | { kind: "pair"; figs: [Figure, Figure]; /** Shape of both images instead of the 3 / 4 crop, e.g. "4 / 5". */ ratio?: string };
 export type Project = {
@@ -54,18 +54,21 @@ export const projects: Project[] = [
         { name: "landing-wide", alt: "Sonar landing page on a laptop", caption: "Landing page" },
       ] },
       { kind: "pair", ratio: "4 / 5", figs: [
-        { name: "swatches", alt: "Sonar colour palette: Sonar Green, Sonar Black and three neutrals with HEX, RGB and CMYK values", caption: "Colour — Sonar Green, Sonar Black and three neutrals" },
+        { name: "swap", alt: "Sonar mobile swap: picking SOL, typing an amount, swapping into USDC and watching it complete", caption: "Mobile — swap", video: [880, 1100] },
         { name: "mobile", alt: "Sonar mobile app showing active strategies", caption: "Mobile — active strategies" },
       ] },
       { kind: "wide", fig: { name: "cards", native: true, alt: "Sonar strategy creation flow across screens", caption: "Product — strategy flow",
         decision: { title: "The pulse carries into print", body: "The concentric pattern on the card backs is the mark’s pulse, repeated. It lets small pieces of print feel like Sonar without the logo shouting." } } },
       { kind: "pair", figs: [
-        { name: "typography", alt: "Type specimen cycling through Inter Tight and Inter Tight Display in regular, medium and semibold", caption: "Typography — Inter Tight and Inter Tight Display", video: [1050, 1350] },
+        { name: "monitor-tall", alt: "Sonar dashboard with active strategies and token table on a studio display", caption: "Dashboard — strategies and tokens" },
         { name: "landing", alt: "Sonar landing page, “Automated DeFi Strategies”, on a laptop", caption: "Web — landing page" },
       ] },
-      { kind: "wide", fig: { name: "strategies", alt: "Sonar dashboard with active strategies and token table on a studio display", caption: "Strategies and tokens" } },
       { kind: "wide", fig: { name: "tablet", alt: "Sonar token page for BONK / SOL with price chart, swap panel and transactions on a tablet", caption: "Token page on tablet" } },
       { kind: "wide", fig: { name: "screens", alt: "Five Sonar screens: dashboard, token page, strategies, rewards and batch deposit", caption: "Product screens", native: true,
+        bento: [{ name: "type-spec", alt: "Sonar heading scale h1 to h6 in regular and medium, with tokens and sizes", caption: "Typography — heading scale" },
+          { name: "type-glyphs", alt: "Character set of lowercase letters, numerals and symbols, cycling through Inter Tight and Inter Display in regular, medium and semibold", caption: "Typography — character set", video: [1400, 904] },
+          { name: "colour-map", alt: "Sonar Green, Sonar Blue and Card Surface mapped to the tokens and components that use them", caption: "Colour — tokens in use" },
+          { name: "colour-swatches", alt: "Sonar Green, Sonar Black and three neutrals with HEX, RGB, CMYK and token names", caption: "Colour — palette" }],
         decision: { title: "Big numbers, quiet tables", body: "Totals are set large and everything beneath them is set small and even. Traders scan the headline first and only drop into the table when something has moved." } } },
     ],
   },

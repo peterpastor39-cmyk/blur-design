@@ -51,6 +51,22 @@
     "landing-wide": [
       4050,
       3000
+    ],
+    "type-spec": [
+      1363,
+      1558
+    ],
+    "colour-map": [
+      2218,
+      1558
+    ],
+    "colour-swatches": [
+      1558,
+      1558
+    ],
+    "monitor-tall": [
+      2400,
+      3200
     ]
   },
   "tendr": {

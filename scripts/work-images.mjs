@@ -22,10 +22,16 @@ const figures = {
     { name: "mobile-dashboard", file: "Frame 2085663282.png", crop: [.765, .38, .233, .62] },
     { name: "landing", file: "landing page mockup.jpg", crop: [.24, 0, .556, 1] },
     { name: "strategies", file: "Sonar dashboard - studio display.jpg" },
+    // The same studio display, extended to 3:4 for the pair beside the laptop:
+    // wall continued above, desk below, both fading to dark.
+    { name: "monitor-tall", file: "Studio Display Screen Mockup_18 - tall.png", sharp: true },
     { name: "tablet", file: "Dasboard tablet.png" },
     { name: "screens", file: "White.png", sharp: true },
     { name: "phone", file: "Phone Mocup 1.png" },
     { name: "landing-wide", file: "landing page mockup.jpg" },
+    { name: "type-spec", file: "Typography spec sheet.jpg", sharp: true },
+    { name: "colour-map", file: "Colour mapping.jpg", sharp: true },
+    { name: "colour-swatches", file: "Colour swatches.jpg", sharp: true },
   ],
   tendr: [
     { name: "cover", file: "tendr-waffle-1920x1080.png" },
