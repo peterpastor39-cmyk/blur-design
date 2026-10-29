@@ -4,7 +4,7 @@ import type { Figure } from "@/content/work";
 import { imageSize } from "@/content/work";
 
 // A few images in one frame, crossfading every few seconds while on screen (held on the first for reduced motion).
-const HOLD = 2200;
+const HOLD = 1800;
 
 export default function Slides({ slug, figs, sizes, ratio = "3 / 2" }: { slug: string; figs: Figure[]; sizes: string; ratio?: string }) {
   const [i, setI] = useState(0);

@@ -49,8 +49,8 @@ export const projects: Project[] = [
       { kind: "slides", caption: "Sonar across devices — one accent colour across the whole product", figs: [
         { name: "display", alt: "Sonar dashboard on a studio display", caption: "Studio display",
           decision: { title: "One colour means “act”", body: "Everything sits in greys so the green is reserved for actions and gains. When it appears, it is always the thing to look at." } },
-        { name: "phone", alt: "Sonar app on a phone", caption: "Phone" },
         { name: "tablet", alt: "Sonar token page on a tablet", caption: "Tablet" },
+        { name: "phone", alt: "Sonar app on a phone", caption: "Phone" },
         { name: "landing-wide", alt: "Sonar landing page on a laptop", caption: "Landing page" },
       ] },
       { kind: "pair", ratio: "4 / 5", figs: [
