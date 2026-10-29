@@ -64,7 +64,7 @@ export const projects: Project[] = [
         { name: "landing", alt: "Sonar landing page, “Automated DeFi Strategies”, on a laptop", caption: "Web — landing page" },
       ] },
       { kind: "wide", fig: { name: "tablet", alt: "Sonar token page for BONK / SOL with price chart, swap panel and transactions on a tablet", caption: "Token page on tablet" } },
-      { kind: "wide", fig: { name: "screens", alt: "Five Sonar screens: dashboard, token page, strategies, rewards and batch deposit", caption: "Product screens", native: true,
+      { kind: "wide", fig: { name: "screens", alt: "Sonar strategies and rewards screens on two tablets", caption: "Product — strategies and rewards", native: true,
         bento: [{ name: "type-spec", alt: "Sonar heading scale h1 to h6 in regular and medium, with tokens and sizes", caption: "Typography — heading scale" },
           { name: "type-glyphs", alt: "Character set of lowercase letters, numerals and symbols, cycling through Inter Tight and Inter Display in regular, medium and semibold", caption: "Typography — character set", video: [1400, 904] },
           { name: "colour-map", alt: "Sonar Green, Sonar Blue and Card Surface mapped to the tokens and components that use them", caption: "Colour — tokens in use" },

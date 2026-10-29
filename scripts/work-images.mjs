@@ -26,7 +26,7 @@ const figures = {
     // wall continued above, desk below, both fading to dark.
     { name: "monitor-tall", file: "Studio Display Screen Mockup_18 - tall.png", sharp: true },
     { name: "tablet", file: "Token Info tablet sit.png" },
-    { name: "screens", file: "White.png", sharp: true },
+    { name: "screens", file: "2 tablets.png", sharp: true },
     { name: "phone", file: "Phone Mocup 1.png" },
     { name: "landing-wide", file: "landing page mockup.jpg" },
     { name: "type-spec", file: "Typography spec sheet.jpg", sharp: true },
