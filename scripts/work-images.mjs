@@ -25,7 +25,7 @@ const figures = {
     // The same studio display, extended to 3:4 for the pair beside the laptop:
     // wall continued above, desk below, both fading to dark.
     { name: "monitor-tall", file: "Studio Display Screen Mockup_18 - tall.png", sharp: true },
-    { name: "tablet", file: "Dasboard tablet.png" },
+    { name: "tablet", file: "Token Info tablet sit.png" },
     { name: "screens", file: "White.png", sharp: true },
     { name: "phone", file: "Phone Mocup 1.png" },
     { name: "landing-wide", file: "landing page mockup.jpg" },
