@@ -20,7 +20,10 @@ export default function Gallery({ project }: { project: Project }) {
 
   return <section className="cs-gallery" aria-label={`${project.name} images`}>
     {project.rows.map(r => r.kind === "wide"
-      ? [<div key={r.fig.name} className="cs-row cs-row--wide">{fig(r.fig, WIDE)}</div>, note(r.fig)]
+      ? [<div key={r.fig.name} className="cs-row cs-row--wide">{fig(r.fig, WIDE)}</div>,
+        ...Array.from({ length: r.fig.placeholders ?? 0 }, (_, i) =>
+          <div key={`${r.fig.name}-ph${i}`} className="cs-row cs-row--wide" aria-hidden="true"><div className="cs-media" /></div>),
+        note(r.fig)]
       : [<div key={r.figs[0].name} className="cs-row cs-row--pair"
         style={r.ratio ? { "--pair-ratio": r.ratio } as React.CSSProperties : undefined}>{r.figs.map(f => fig(f, HALF))}</div>, ...r.figs.map(note)])}
   </section>;

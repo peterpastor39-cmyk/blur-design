@@ -10,6 +10,8 @@ export type Figure = {
   video?: [number, number];
   /** Keep the image's own aspect ratio instead of the row's fixed crop. */
   native?: boolean;
+  /** Empty wide boxes shown under this image (before its decision) until real images exist. */
+  placeholders?: number;
 };
 export type Row = { kind: "wide"; fig: Figure } | { kind: "pair"; figs: [Figure, Figure]; /** Shape of both images instead of the 3 / 4 crop, e.g. "4 / 5". */ ratio?: string };
 export type Project = {
@@ -56,9 +58,8 @@ export const projects: Project[] = [
         { name: "typography", alt: "Type specimen cycling through Inter Tight and Inter Tight Display in regular, medium and semibold", caption: "Typography — Inter Tight and Inter Tight Display", video: [1050, 1350] },
         { name: "landing", alt: "Sonar landing page, “Automated DeFi Strategies”, on a laptop", caption: "Web — landing page" },
       ] },
-      { kind: "wide", fig: { name: "strategies", alt: "Sonar dashboard with active strategies and token table on a studio display", caption: "Strategies and tokens",
-        decision: { title: "Big numbers, quiet tables", body: "Totals are set large and everything beneath them is set small and even. Traders scan the headline first and only drop into the table when something has moved." } } },
-    ],
+      { kind: "wide", fig: { name: "strategies", alt: "Sonar dashboard with active strategies and token table on a studio display", caption: "Strategies and tokens", placeholders: 2,
+        decision: { title: "Big numbers, quiet tables", body: "Totals are set large and everything beneath them is set small and even. Traders scan the headline first and only drop into the table when something has moved." } } },    ],
   },
   {
     slug: "tendr",
