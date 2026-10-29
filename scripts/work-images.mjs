@@ -1,10 +1,11 @@
 // Builds the case-study images in public/work/<slug>/ from full-size source files.
-//   node scripts/work-images.mjs "<source folder>"
+//   node scripts/work-images.mjs "<source folder>" [name,name]   (names: rebuild only those figures)
 // Each figure gets AVIF at two widths (served via srcset) and one WebP fallback.
 // Crops are fractions of the source: [left, top, width, height].
 // `sharp: true` is for screens with small UI text: lighter compression and full-resolution colour.
 import sharp from "sharp";
 import { mkdir, writeFile } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import path from "node:path";
 
 const src = process.argv[2] ?? path.join(process.env.USERPROFILE ?? "", "OneDrive/Desktop/hero images");
@@ -21,6 +22,10 @@ const figures = {
     { name: "mobile-dashboard", file: "Frame 2085663282.png", crop: [.765, .38, .233, .62] },
     { name: "landing", file: "landing page mockup.jpg", crop: [.24, 0, .556, 1] },
     { name: "strategies", file: "Sonar dashboard - studio display.jpg" },
+    { name: "tablet", file: "Dasboard tablet.png" },
+    { name: "screens", file: "White.png", sharp: true },
+    { name: "phone", file: "Phone Mocup 1.png" },
+    { name: "landing-wide", file: "landing page mockup.jpg" },
   ],
   tendr: [
     { name: "cover", file: "tendr-waffle-1920x1080.png" },
@@ -35,9 +40,12 @@ const figures = {
 };
 
 // Pixel sizes of each cropped source, read by content/work.ts for srcset widths and aspect ratios.
-const manifest = {};
-for (const [slug, list] of Object.entries(figures)) {
-  manifest[slug] = {};
+const only = process.argv[3]?.split(",");
+const manifest = only ? JSON.parse(await readFile("content/work-images.json", "utf8")) : {};
+for (const [slug, all] of Object.entries(figures)) {
+  const list = only ? all.filter(f => only.includes(f.name)) : all;
+  if (!list.length) continue;
+  manifest[slug] ??= {};
   const out = path.join("public/work", slug);
   await mkdir(out, { recursive: true });
   for (const fig of list) {

@@ -1,5 +1,6 @@
 import type { Figure, Project } from "@/content/work";
 import Media from "./Media";
+import Slides from "./Slides";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 export const WIDE = "(max-width: 760px) 100vw, 70vw";
@@ -19,7 +20,12 @@ export default function Gallery({ project }: { project: Project }) {
   </aside>;
 
   return <section className="cs-gallery" aria-label={`${project.name} images`}>
-    {project.rows.map(r => r.kind === "wide"
+    {project.rows.map(r => r.kind === "slides"
+      ? [<div key={r.figs[0].name + "-slides"} className="cs-row cs-row--wide"><figure className="cs-fig">
+          <Slides slug={project.slug} figs={r.figs} sizes={WIDE} ratio={r.ratio} />
+          <figcaption className="cs-sr">Fig. {pad(++n)} — {r.caption}</figcaption>
+        </figure></div>, ...r.figs.map(note)]
+      : r.kind === "wide"
       ? [<div key={r.fig.name} className="cs-row cs-row--wide">{fig(r.fig, WIDE)}</div>,
         ...Array.from({ length: r.fig.placeholders ?? 0 }, (_, i) =>
           <div key={`${r.fig.name}-ph${i}`} className="cs-row cs-row--wide" aria-hidden="true"><div className="cs-media" /></div>),

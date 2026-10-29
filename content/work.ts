@@ -13,7 +13,7 @@ export type Figure = {
   /** Empty wide boxes shown under this image (before its decision) until real images exist. */
   placeholders?: number;
 };
-export type Row = { kind: "wide"; fig: Figure } | { kind: "pair"; figs: [Figure, Figure]; /** Shape of both images instead of the 3 / 4 crop, e.g. "4 / 5". */ ratio?: string };
+export type Row = { kind: "wide"; fig: Figure } | { kind: "slides"; figs: Figure[]; caption: string; ratio?: string } | { kind: "pair"; figs: [Figure, Figure]; /** Shape of both images instead of the 3 / 4 crop, e.g. "4 / 5". */ ratio?: string };
 export type Project = {
   slug: string;
   name: string;
@@ -46,8 +46,13 @@ export const projects: Project[] = [
     ],
     card: "mobile",
     rows: [
-      { kind: "wide", fig: { name: "display", alt: "Sonar dashboard on a studio display", caption: "Dashboard — one accent colour across the whole product",
-        decision: { title: "One colour means “act”", body: "Everything sits in greys so the green is reserved for actions and gains. When it appears, it is always the thing to look at." } } },
+      { kind: "slides", caption: "Sonar across devices — one accent colour across the whole product", figs: [
+        { name: "display", alt: "Sonar dashboard on a studio display", caption: "Studio display",
+          decision: { title: "One colour means “act”", body: "Everything sits in greys so the green is reserved for actions and gains. When it appears, it is always the thing to look at." } },
+        { name: "phone", alt: "Sonar app on a phone", caption: "Phone" },
+        { name: "tablet", alt: "Sonar token page on a tablet", caption: "Tablet" },
+        { name: "landing-wide", alt: "Sonar landing page on a laptop", caption: "Landing page" },
+      ] },
       { kind: "pair", ratio: "4 / 5", figs: [
         { name: "swatches", alt: "Sonar colour palette: Sonar Green, Sonar Black and three neutrals with HEX, RGB and CMYK values", caption: "Colour — Sonar Green, Sonar Black and three neutrals" },
         { name: "mobile", alt: "Sonar mobile app showing active strategies", caption: "Mobile — active strategies" },
@@ -58,8 +63,11 @@ export const projects: Project[] = [
         { name: "typography", alt: "Type specimen cycling through Inter Tight and Inter Tight Display in regular, medium and semibold", caption: "Typography — Inter Tight and Inter Tight Display", video: [1050, 1350] },
         { name: "landing", alt: "Sonar landing page, “Automated DeFi Strategies”, on a laptop", caption: "Web — landing page" },
       ] },
-      { kind: "wide", fig: { name: "strategies", alt: "Sonar dashboard with active strategies and token table on a studio display", caption: "Strategies and tokens", placeholders: 2,
-        decision: { title: "Big numbers, quiet tables", body: "Totals are set large and everything beneath them is set small and even. Traders scan the headline first and only drop into the table when something has moved." } } },    ],
+      { kind: "wide", fig: { name: "strategies", alt: "Sonar dashboard with active strategies and token table on a studio display", caption: "Strategies and tokens" } },
+      { kind: "wide", fig: { name: "tablet", alt: "Sonar token page for BONK / SOL with price chart, swap panel and transactions on a tablet", caption: "Token page on tablet" } },
+      { kind: "wide", fig: { name: "screens", alt: "Five Sonar screens: dashboard, token page, strategies, rewards and batch deposit", caption: "Product screens", native: true,
+        decision: { title: "Big numbers, quiet tables", body: "Totals are set large and everything beneath them is set small and even. Traders scan the headline first and only drop into the table when something has moved." } } },
+    ],
   },
   {
     slug: "tendr",

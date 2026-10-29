@@ -26,6 +26,10 @@
 .root :global(.cs-media picture), .root :global(.cs-media img), .root :global(.cs-media video) { display: block; width: 100%; height: 100%; }
 .root :global(.cs-media img), .root :global(.cs-media video) { object-fit: cover; opacity: 0; user-select: none; }
 .root :global(.cs-noise-defs) { position: absolute; width: 0; height: 0; }
+/* Slides: stacked in one frame, the current one fades in over the rest. */
+.root :global(.cs-slides picture) { position: absolute; inset: 0; opacity: 0; transition: opacity 700ms ease; }
+.root :global(.cs-slides picture.is-on) { opacity: 1; }
+.root :global(.cs-slides img) { opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .root :global(.cs-media img), .root :global(.cs-media video) { opacity: 1; } }
 
 /* Project: a pinned panel on the left holds title, client, services; story and images scroll on the right. */
